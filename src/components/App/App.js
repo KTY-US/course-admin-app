@@ -20,7 +20,7 @@ const App = () => {
 						<Route path='/home' element={<Home />} />
 						<Route path='/auth/signin' element={<Login />} />
 						<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
-						<Route element={<Error content={'404 Page not found'} />}></Route>
+						<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
 					</Routes>
 				</Container>
 				<ToastContainer autoClose={5000} />
