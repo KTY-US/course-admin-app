@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '../Error/Error';
 import Home from '../Home/Home';
+import AccountProfile from '../Account/AccountProfile';
 
 const theme = createTheme();
 const App = () => {
@@ -19,6 +20,8 @@ const App = () => {
 						<Route path='/home' element={<Home />} />
 						<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 						<Route element={<Error content={'404 Page not found'} />}></Route>
+
+						<Route path='/user/:id' element={<AccountProfile />} />
 					</Routes>
 				</Container>
 				<ToastContainer autoClose={5000} />
