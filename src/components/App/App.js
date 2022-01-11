@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '../Error/Error';
 import Home from '../Home/Home';
+import Login from '../Auth/login';
 
 const theme = createTheme();
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
 					<Routes>
 						<Route path='/' element={<Navigate to='/home' />} />
 						<Route path='/home' element={<Home />} />
+						<Route path='/auth/signin' element={<Login />} />
 						<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 						<Route element={<Error content={'404 Page not found'} />}></Route>
 					</Routes>
