@@ -82,6 +82,13 @@ const Courses = () => {
 		<LinearProgress />
 	) : (
 		<>
+			<Typography
+				variant='h4'
+				gutterBottom
+				sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+			>
+				Courses
+			</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
 				<Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
 					<InputBase
