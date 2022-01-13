@@ -1,142 +1,120 @@
-import React, { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { format } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-	Avatar,
-	Box,
-	Card,
-	Checkbox,
+	LinearProgress,
+	Paper,
 	Table,
 	TableBody,
 	TableCell,
+	TableContainer,
 	TableHead,
-	TablePagination,
 	TableRow,
 	Typography
 } from '@mui/material';
-import { getInitials } from '../../utils/get-initials';
 
-const Courses = ({ customers, ...rest }) => {
-	const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-	const [limit, setLimit] = useState(10);
-	const [page, setPage] = useState(0);
+import { getCourses } from '../../actions/course';
+import Pagination from '../Pagination/Pagination';
+import Course from './Course/Course';
+import { useQuery } from '../../helpers/queryString';
+import { getUserInformationFromStorage } from '../../helpers/localStorage';
 
-	const handleSelectAll = (event) => {
-		let newSelectedCustomerIds;
+const ROWS_PER_PAGE = 20;
 
-		if (event.target.checked) {
-			newSelectedCustomerIds = customers.map((customer) => customer.id);
-		} else {
-			newSelectedCustomerIds = [];
-		}
+const columns = [
+	{ id: 'stt', label: 'STT', minWidth: 50, align: 'center' },
+	{ id: 'courseName', label: 'Course name', minWidth: 280 },
+	{
+		id: 'teacher',
+		label: 'Teacher',
+		minWidth: 150
+	},
+	{
+		id: 'schoolYear',
+		label: 'School year',
+		minWidth: 50,
+		align: 'center'
+	},
+	{
+		id: 'startDate',
+		label: 'Start date',
+		minWidth: 50,
+		align: 'center'
+	}
+];
 
-		setSelectedCustomerIds(newSelectedCustomerIds);
-	};
+const Courses = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const query = useQuery();
+	const { isLoading, courses, total } = useSelector((state) => state.course);
+	const [rowsPerPage, setRowsPerPage] = useState(+query.get('rowsPerPage') || ROWS_PER_PAGE);
+	const [page, setPage] = useState(+query.get('page') || 0);
 
-	const handleSelectOne = (event, id) => {
-		const selectedIndex = selectedCustomerIds.indexOf(id);
-		let newSelectedCustomerIds = [];
+	const numberOfPages = Math.ceil(total / rowsPerPage) - 1 < 0 ? 0 : Math.ceil(total / rowsPerPage) - 1;
 
-		if (selectedIndex === -1) {
-			newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
-		} else if (selectedIndex === 0) {
-			newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-		} else if (selectedIndex === selectedCustomerIds.length - 1) {
-			newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
-		} else if (selectedIndex > 0) {
-			newSelectedCustomerIds = newSelectedCustomerIds.concat(
-				selectedCustomerIds.slice(0, selectedIndex),
-				selectedCustomerIds.slice(selectedIndex + 1)
-			);
-		}
+	if (rowsPerPage < -1) {
+		setRowsPerPage(-1);
+	}
 
-		setSelectedCustomerIds(newSelectedCustomerIds);
-	};
+	useEffect(() => {
+		const userId = getUserInformationFromStorage().userId;
+		navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}`, { replace: true });
+		dispatch(getCourses(page + 1, rowsPerPage, userId));
+	}, [page, rowsPerPage]);
 
-	const handleLimitChange = (event) => {
-		setLimit(event.target.value);
-	};
-
-	const handlePageChange = (event, newPage) => {
-		setPage(newPage);
-	};
+	const coursesJSX = isLoading ? (
+		<LinearProgress />
+	) : (
+		<>
+			{total > 0 ? (
+				<Paper sx={{ width: '100%', overflow: 'hidden' }}>
+					<TableContainer>
+						<Table stickyHeader aria-label='sticky table'>
+							<TableHead>
+								<TableRow>
+									{columns.map((column) => (
+										<TableCell
+											key={column.id}
+											align={column.align}
+											style={{ minWidth: column.minWidth }}
+										>
+											{column.label}
+										</TableCell>
+									))}
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{courses.map((course, index) => {
+									return (
+										<Course key={course.id} course={course} stt={page * rowsPerPage + index + 1} />
+									);
+								})}
+							</TableBody>
+						</Table>
+					</TableContainer>
+					<Pagination
+						total={total}
+						rowsPerPage={rowsPerPage}
+						setPage={setPage}
+						page={page > numberOfPages || page < 0 ? setPage(0) : page}
+						setRowsPerPage={setRowsPerPage}
+					/>
+				</Paper>
+			) : (
+				<Typography variant='h5' gutterBottom>
+					You have {total} course.
+				</Typography>
+			)}
+		</>
+	);
 
 	return (
-		<Card {...rest}>
-			<PerfectScrollbar>
-				<Box sx={{ minWidth: 1050 }}>
-					<Table>
-						<TableHead>
-							<TableRow>
-								<TableCell padding='checkbox'>
-									<Checkbox
-										checked={selectedCustomerIds.length === customers.length}
-										color='primary'
-										indeterminate={
-											selectedCustomerIds.length > 0 &&
-											selectedCustomerIds.length < customers.length
-										}
-										onChange={handleSelectAll}
-									/>
-								</TableCell>
-								<TableCell>Name</TableCell>
-								<TableCell>Email</TableCell>
-								<TableCell>Location</TableCell>
-								<TableCell>Phone</TableCell>
-								<TableCell>Registration date</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{customers.slice(0, limit).map((customer) => (
-								<TableRow
-									hover
-									key={customer.id}
-									selected={selectedCustomerIds.indexOf(customer.id) !== -1}
-								>
-									<TableCell padding='checkbox'>
-										<Checkbox
-											checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-											onChange={(event) => handleSelectOne(event, customer.id)}
-											value='true'
-										/>
-									</TableCell>
-									<TableCell>
-										<Box
-											sx={{
-												alignItems: 'center',
-												display: 'flex'
-											}}
-										>
-											<Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
-												{getInitials(customer.name)}
-											</Avatar>
-											<Typography color='textPrimary' variant='body1'>
-												{customer.name}
-											</Typography>
-										</Box>
-									</TableCell>
-									<TableCell>{customer.email}</TableCell>
-									<TableCell>
-										{`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-									</TableCell>
-									<TableCell>{customer.phone}</TableCell>
-									<TableCell>{format(customer.createdAt, 'dd/MM/yyyy')}</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</Box>
-			</PerfectScrollbar>
-			<TablePagination
-				component='div'
-				count={customers.length}
-				onPageChange={handlePageChange}
-				onRowsPerPageChange={handleLimitChange}
-				page={page}
-				rowsPerPage={limit}
-				rowsPerPageOptions={[5, 10, 25]}
-			/>
-		</Card>
+		<>
+			<br />
+			<br />
+			{coursesJSX}
+		</>
 	);
 };
 
