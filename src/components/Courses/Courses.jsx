@@ -57,11 +57,11 @@ const Courses = () => {
 		setRowsPerPage(-1);
 	}
 
-	useEffect(() => {
-		const userId = getUserInformationFromStorage().userId;
-		navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}`, { replace: true });
-		dispatch(getCourses(page + 1, rowsPerPage, userId));
-	}, [page, rowsPerPage]);
+	// useEffect(() => {
+	// 	const userId = getUserInformationFromStorage().userId;
+	// 	navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}`, { replace: true });
+	// 	dispatch(getCourses(page + 1, rowsPerPage, userId));
+	// }, [page, rowsPerPage]);
 
 	const coursesJSX = isLoading ? (
 		<LinearProgress />
