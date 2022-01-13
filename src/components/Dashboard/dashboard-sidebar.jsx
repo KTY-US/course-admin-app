@@ -12,6 +12,7 @@ import { Users as UsersIcon } from '../../icons/users';
 import { XCircle as XCircleIcon } from '../../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
+import { Link } from 'react-router-dom';
 
 const items = [
 	{
@@ -78,74 +79,37 @@ export const DashboardSidebar = (props) => {
 		<>
 			<Box
 				sx={{
-					display: 'flex',
-					flexDirection: 'column',
 					height: '100%'
 				}}
 			>
-				<div>
-					<Box sx={{ p: 3 }}>
-						<Logo
-							sx={{
-								height: 42,
-								width: 42
-							}}
-						/>
-					</Box>
-					<Box sx={{ px: 2 }}>
-						<Box
-							sx={{
-								alignItems: 'center',
-								backgroundColor: 'rgba(255, 255, 255, 0.04)',
-								cursor: 'pointer',
-								display: 'flex',
-								justifyContent: 'space-between',
-								px: 3,
-								py: '11px',
-								borderRadius: 1
-							}}
-						>
-							<div>
-								<Typography color='inherit' variant='subtitle1'>
-									Acme Inc
-								</Typography>
-								<Typography color='neutral.400' variant='body2'>
-									Your tier : Premium
-								</Typography>
-							</div>
-							<SelectorIcon
-								sx={{
-									color: 'neutral.500',
-									width: 14,
-									height: 14
-								}}
-							/>
-						</Box>
-					</Box>
-				</div>
-				<Divider
+				<Box
 					sx={{
-						borderColor: '#2D3748',
-						my: 3
+						alignItems: 'center',
+						cursor: 'pointer',
+						display: 'flex',
+						justifyContent: 'center',
+						height: '10%',
+						textDecoration: 'none'
 					}}
-				/>
+					component={Link}
+					to={'/'}
+				>
+					<div>
+						<Typography color='black' variant='h4' sx={{ display: 'flex', justifyContent: 'center' }}>
+							Admin page
+						</Typography>
+					</div>
+				</Box>
+
+				<br />
+				<br />
+				<br />
+				<br />
+
 				<Box sx={{ flexGrow: 1 }}>
 					{items.map((item) => (
 						<NavItem key={item.title} icon={item.icon} href={item.href} title={item.title} />
 					))}
-				</Box>
-				<Box
-					sx={{
-						px: 2,
-						py: 3
-					}}
-				>
-					<Typography color='neutral.100' variant='subtitle2'>
-						Need more features?
-					</Typography>
-					<Typography color='neutral.500' variant='body2'>
-						Check out our Pro solution template.
-					</Typography>
 				</Box>
 			</Box>
 		</>
@@ -160,7 +124,7 @@ export const DashboardSidebar = (props) => {
 					sx: {
 						backgroundColor: 'neutral.900',
 						color: '#FFFFFF',
-						width: 280
+						width: 220
 					}
 				}}
 				variant='permanent'
@@ -179,7 +143,7 @@ export const DashboardSidebar = (props) => {
 				sx: {
 					backgroundColor: 'neutral.900',
 					color: '#FFFFFF',
-					width: 280
+					width: 220
 				}
 			}}
 			sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}

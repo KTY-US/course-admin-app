@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 
-import * as api from '../api/course.js';
-import { deleteParticipant } from '../api/participants';
+import * as api from '../apis/course.js';
 import { courseActions } from '../reducers/course.js';
 import { courseDetailActions } from '../reducers/courseDetail.js';
 import { getUserInformationFromStorage } from '../helpers/localStorage';
@@ -80,39 +79,6 @@ export const updateCourse = (form, navigate) => async (dispatch) => {
 		toast.error(response?.data.message);
 	} finally {
 		dispatch(courseDetailActions.changeIsUpdating(false));
-	}
-};
-
-export const leaveCourse = (userId, courseId) => async (dispatch) => {
-	try {
-		dispatch(courseActions.changeIsLoading(true));
-		const deleteForm = {
-			userId: userId,
-			courseId: courseId
-		};
-		await deleteParticipant(deleteForm);
-		await dispatch(courseActions.leaveCourse(courseId));
-		await dispatch(getJoinedCourses(userId));
-		toast.success('Leave course successfully!');
-	} catch (error) {
-		toast.error(error.message);
-	} finally {
-		dispatch(courseActions.changeIsLoading(false));
-	}
-};
-
-export const deleteCourse = (courseId) => async (dispatch) => {
-	try {
-		const user = getUserInformationFromStorage();
-		dispatch(courseActions.changeIsLoading(true));
-		await api.deleteCourse(courseId);
-		await dispatch(courseActions.deleteCourse(courseId));
-		await dispatch(getMyCourses(user.userId));
-		toast.success('Delete course successfully!');
-	} catch (error) {
-		toast.error(error.message);
-	} finally {
-		dispatch(courseActions.changeIsLoading(false));
 	}
 };
 

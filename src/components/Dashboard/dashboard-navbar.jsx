@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip } from '@mui/material';
+import { AppBar, Avatar, Box, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import { Bell as BellIcon } from '../../icons/bell';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
-import { Users as UsersIcon } from '../../icons/users';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper,
@@ -20,10 +17,10 @@ export const DashboardNavbar = (props) => {
 			<DashboardNavbarRoot
 				sx={{
 					left: {
-						lg: 280
+						lg: 220
 					},
 					width: {
-						lg: 'calc(100% - 280px)'
+						lg: 'calc(100% - 220px)'
 					}
 				}}
 				{...other}
@@ -47,24 +44,8 @@ export const DashboardNavbar = (props) => {
 					>
 						<MenuIcon fontSize='small' />
 					</IconButton>
-					<Tooltip title='Search'>
-						<IconButton sx={{ ml: 1 }}>
-							<SearchIcon fontSize='small' />
-						</IconButton>
-					</Tooltip>
+
 					<Box sx={{ flexGrow: 1 }} />
-					<Tooltip title='Contacts'>
-						<IconButton sx={{ ml: 1 }}>
-							<UsersIcon fontSize='small' />
-						</IconButton>
-					</Tooltip>
-					<Tooltip title='Notifications'>
-						<IconButton sx={{ ml: 1 }}>
-							<Badge badgeContent={4} color='primary' variant='dot'>
-								<BellIcon fontSize='small' />
-							</Badge>
-						</IconButton>
-					</Tooltip>
 					<Avatar
 						sx={{
 							height: 40,
