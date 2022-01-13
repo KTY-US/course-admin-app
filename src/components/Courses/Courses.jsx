@@ -10,8 +10,16 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	Typography
+	Typography,
+	IconButton,
+	Box
 } from '@mui/material';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 import { getCourses } from '../../actions/course';
 import Pagination from '../Pagination/Pagination';
@@ -58,6 +66,12 @@ const Courses = () => {
 		setRowsPerPage(-1);
 	}
 
+	const [age, setAge] = React.useState('');
+
+	const handleChange = (event) => {
+		setAge(event.target.value);
+	};
+
 	// useEffect(() => {
 	// 	const userId = getUserInformationFromStorage().userId;
 	// 	navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}`, { replace: true });
@@ -68,6 +82,34 @@ const Courses = () => {
 		<LinearProgress />
 	) : (
 		<>
+			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+				<Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
+					<InputBase
+						sx={{ ml: 1, flex: 1 }}
+						placeholder='Search Name or Email'
+						inputProps={{ 'aria-label': 'search google maps' }}
+					/>
+					<IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
+						<SearchIcon />
+					</IconButton>
+				</Paper>
+				<FormControl sx={{ m: 1, minWidth: 135 }}>
+					<InputLabel id='demo-simple-select-helper-label'>Sort By Time</InputLabel>
+					<Select
+						labelId='demo-simple-select-helper-label'
+						id='demo-simple-select-helper'
+						value={age}
+						label='Sort By Time'
+						onChange={handleChange}
+					>
+						<MenuItem value=''>
+							<em>None</em>
+						</MenuItem>
+						<MenuItem value={10}>ASC</MenuItem>
+						<MenuItem value={20}>DESC</MenuItem>
+					</Select>
+				</FormControl>
+			</Box>
 			{total > 0 ? (
 				<Paper sx={{ width: '100%', overflow: 'hidden' }}>
 					<TableContainer>
