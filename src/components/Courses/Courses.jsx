@@ -19,7 +19,7 @@ import Course from './Course/Course';
 import { useQuery } from '../../helpers/queryString';
 import { getUserInformationFromStorage } from '../../helpers/localStorage';
 
-const ROWS_PER_PAGE = 20;
+const ROWS_PER_PAGE = -1;
 
 const columns = [
 	{ id: 'stt', label: 'STT', minWidth: 50, align: 'center' },
@@ -47,10 +47,11 @@ const Courses = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const query = useQuery();
-	const { isLoading, courses, total } = useSelector((state) => state.course);
+	// const { isLoading, courses, total } = useSelector((state) => state.course);
 	const [rowsPerPage, setRowsPerPage] = useState(+query.get('rowsPerPage') || ROWS_PER_PAGE);
 	const [page, setPage] = useState(+query.get('page') || 0);
-
+	const total = 10;
+	const isLoading = false;
 	const numberOfPages = Math.ceil(total / rowsPerPage) - 1 < 0 ? 0 : Math.ceil(total / rowsPerPage) - 1;
 
 	if (rowsPerPage < -1) {
@@ -85,11 +86,14 @@ const Courses = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{courses.map((course, index) => {
+								{/* {courses.map((course, index) => {
 									return (
 										<Course key={course.id} course={course} stt={page * rowsPerPage + index + 1} />
 									);
-								})}
+								})} */}
+								<Course />
+								<Course />
+								<Course />
 							</TableBody>
 						</Table>
 					</TableContainer>

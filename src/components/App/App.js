@@ -10,24 +10,27 @@ import Home from '../Home/Home';
 import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
+import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
 
 const theme = createTheme();
 const App = () => {
 	return (
 		<BrowserRouter>
 			<ThemeProvider theme={theme}>
-				<Container maxWidth='xl'>
-					<Routes>
-						<Route path='/' element={<Navigate to='/home' />} />
-						<Route path='/home' element={<Home />} />
-						<Route path='/courses' element={<Courses />} />
-						<Route path='/auth/signin' element={<Login />} />
-						<Route path='/user' element={<Account />} />
-						<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
-						<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
-					</Routes>
-				</Container>
-				<ToastContainer autoClose={5000} />
+				<DashboardLayoutRoot>
+					<Container>
+						<Routes>
+							<Route path='/' element={<Navigate to='/home' />} />
+							<Route path='/home' element={<Home />} />
+							<Route path='/courses' element={<Courses />} />
+							<Route path='/auth/signin' element={<Login />} />
+							<Route path='/user' element={<Account />} />
+							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
+							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
+						</Routes>
+					</Container>
+					<ToastContainer autoClose={5000} />
+				</DashboardLayoutRoot>
 			</ThemeProvider>
 		</BrowserRouter>
 	);

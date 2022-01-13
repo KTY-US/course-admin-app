@@ -1,9 +1,13 @@
 import React from 'react';
 
-import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
+import Courses from '../Courses/Courses';
 
 const Home = () => {
-	return <DashboardLayoutRoot />;
+	return (
+		<>
+			<Courses />
+		</>
+	);
 };
 
 export default Home;

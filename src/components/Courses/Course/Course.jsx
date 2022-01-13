@@ -10,22 +10,29 @@ const Course = ({ course, stt }) => {
 	};
 	return (
 		<>
-			{course && (
-				<TableRow hover role='checkbox' onClick={openCourse} style={{ cursor: 'pointer' }}>
-					<TableCell component='th' scope='row' align='center'>
-						{stt}
-					</TableCell>
+			{/* nhớ if course? */}
+			<TableRow hover role='checkbox' onClick={openCourse} style={{ cursor: 'pointer' }}>
+				<TableCell component='th' scope='row' align='center'>
+					{/* {stt} */}1
+				</TableCell>
 
-					<TableCell>
-						{course.courseName.length > 60 ? course.courseName.slice(0, 60) + '...' : course.courseName}
-					</TableCell>
-					<TableCell>
-						{course?.owner?.firstName} {course?.owner?.lastName}
-					</TableCell>
-					<TableCell align='center'>{course?.schoolYear}</TableCell>
-					<TableCell align='center'>{moment(course?.createdAt).format('DD-MM-YYYY')}</TableCell>
-				</TableRow>
-			)}
+				<TableCell>
+					{/* {course.courseName.length > 60 ? course.courseName.slice(0, 60) + '...' : course.courseName} */}
+					Mon Hoc Dau tien
+				</TableCell>
+				<TableCell>
+					Bui Huynh Trung Tin
+					{/* {course?.owner?.firstName} {course?.owner?.lastName} */}
+				</TableCell>
+				<TableCell align='center'>
+					{/* {course?.schoolYear} */}
+					2021
+				</TableCell>
+				<TableCell align='center'>
+					{/* {moment(course?.createdAt).format('DD-MM-YYYY')} */}
+					{moment('20/12/2021').format('DD-MM-YYYY')}
+				</TableCell>
+			</TableRow>
 		</>
 	);
 };
