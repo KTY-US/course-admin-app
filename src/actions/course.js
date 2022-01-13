@@ -17,30 +17,6 @@ export const getCourses = (page, rowPerPage, userId) => async (dispatch) => {
 	}
 };
 
-export const getMyCourses = (userId) => async (dispatch) => {
-	try {
-		dispatch(courseActions.changeIsLoading(true));
-		const { data } = await api.getMyCourses(userId);
-		dispatch(courseActions.storeMyCourses(data));
-	} catch (error) {
-		toast.error(error.message);
-	} finally {
-		dispatch(courseActions.changeIsLoading(false));
-	}
-};
-
-export const getJoinedCourses = (userId) => async (dispatch) => {
-	try {
-		dispatch(courseActions.changeIsLoading(true));
-		const { data } = await api.getJoinedCourses(userId);
-		dispatch(courseActions.storeJoinedCourses(data));
-	} catch (error) {
-		toast.error(error.message);
-	} finally {
-		dispatch(courseActions.changeIsLoading(false));
-	}
-};
-
 export const getCourseDetails = async (id) => async (dispatch) => {
 	try {
 		dispatch(courseActions.changeIsLoading(true));
@@ -50,46 +26,6 @@ export const getCourseDetails = async (id) => async (dispatch) => {
 		toast.error(error.message);
 	} finally {
 		dispatch(courseActions.changeIsLoading(false));
-	}
-};
-
-export const createCourse = (form, navigate) => async (dispatch) => {
-	try {
-		dispatch(courseActions.changeIsLoading(true));
-		const { data: newCourse } = await api.createCourse(form);
-		dispatch(courseActions.createCourse(newCourse));
-		await dispatch(await getCourseDetails(newCourse.id));
-		navigate(`../../../courses/${newCourse.id}/c`);
-		toast.success('Create new course successful!!!');
-	} catch ({ response }) {
-		toast.error(response?.data.message);
-	} finally {
-		dispatch(courseActions.changeIsLoading(false));
-	}
-};
-
-export const updateCourse = (form, navigate) => async (dispatch) => {
-	try {
-		dispatch(courseDetailActions.changeIsUpdating(true));
-		const { data: course } = await api.updateCourse(form);
-		dispatch(courseDetailActions.updateCourse(course));
-		navigate(`/courses/${course.id}/c`);
-		toast.success('Update course successful!!!');
-	} catch ({ response }) {
-		toast.error(response?.data.message);
-	} finally {
-		dispatch(courseDetailActions.changeIsUpdating(false));
-	}
-};
-
-export const checkCourseByCode = (code) => async () => {
-	try {
-		const { data: courseId } = await api.checkCourseByCode(code);
-		return courseId;
-	} catch (error) {
-		toast.error(error.message);
-	} finally {
-		//not thing
 	}
 };
 
