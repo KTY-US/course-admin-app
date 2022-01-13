@@ -1,15 +1,27 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Container, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
+import {
+	Box,
+	Button,
+	Container,
+	TextField,
+	Typography,
+	InputAdornment,
+	IconButton,
+	CircularProgress,
+	Grid
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 
-const validateForm = (form) => {
-	let errors = { emailError: '', passwordError: '' };
+import useStyles from './styles';
 
-	if (form.email.trim().length === 0) {
-		errors.emailError = 'Email is required!';
+const validateForm = (form) => {
+	let errors = { usernameError: '', passwordError: '' };
+
+	if (form.username.trim().length === 0) {
+		errors.usernameError = 'Username is required!';
 	}
 
 	if (form.password.trim().length === 0) errors.passwordError = 'Password is required!';
@@ -17,10 +29,11 @@ const validateForm = (form) => {
 };
 
 const Login = () => {
+	const classes = useStyles();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { signInPending, ggSignInPending } = useSelector((state) => state.auth);
-	const [errors, setErrors] = useState({ emailError: '', passwordError: '' });
+	const [errors, setErrors] = useState({ usernameError: '', passwordError: '' });
 	const [errorCredential, setErrorCredential] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const usernameRef = useRef();
@@ -32,8 +45,8 @@ const Login = () => {
 			username: usernameRef.current.value,
 			password: passwordRef.current.value
 		};
-		//let errors = validateForm(form);
-		if (errors.emailError !== '' || errors.passwordError !== '') {
+		let errors = validateForm(form);
+		if (errors.usernameError !== '' || errors.passwordError !== '') {
 			setErrors(errors);
 		} else {
 			console.log(form);
@@ -63,6 +76,7 @@ const Login = () => {
 							</Typography>
 						</Box>
 						<TextField
+							error={errors.usernameError?.length > 0}
 							fullWidth
 							autoFocus
 							label='username'
@@ -71,8 +85,10 @@ const Login = () => {
 							type='text'
 							variant='outlined'
 							inputRef={usernameRef}
+							helperText={errors.usernameError}
 						/>
 						<TextField
+							error={errors.passwordError?.length > 0}
 							fullWidth
 							label='Password'
 							margin='normal'
@@ -80,6 +96,7 @@ const Login = () => {
 							variant='outlined'
 							type={showPassword ? 'text' : 'password'}
 							inputRef={passwordRef}
+							helperText={errors.passwordError}
 							InputProps={{
 								endAdornment: (
 									<InputAdornment position='end'>
@@ -90,11 +107,20 @@ const Login = () => {
 								)
 							}}
 						/>
-						<Box sx={{ py: 2 }}>
-							<Button color='primary' fullWidth size='large' type='submit' variant='contained'>
-								Sign In Now
-							</Button>
-						</Box>
+						<Typography className={classes.errorMessage} variant='caption'>
+							{errorCredential}
+						</Typography>
+						{signInPending ? (
+							<Grid container display='flex' justifyContent='center'>
+								<CircularProgress size={20} sx={{ marginBottom: 2, marginTop: 2 }} />
+							</Grid>
+						) : (
+							<Box sx={{ py: 2 }}>
+								<Button color='primary' fullWidth size='large' type='submit' variant='contained'>
+									Sign In Now
+								</Button>
+							</Box>
+						)}
 					</form>
 				</Container>
 			</Box>
