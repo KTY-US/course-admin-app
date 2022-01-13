@@ -1,7 +1,13 @@
 import React from 'react';
 
+import Courses from '../Courses/Courses';
+
 const Home = () => {
-	return <div>Hello</div>;
+	return (
+		<>
+			<Courses />
+		</>
+	);
 };
 
 export default Home;
