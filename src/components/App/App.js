@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '../Error/Error';
-import Home from '../Home/Home';
 import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
@@ -20,8 +19,7 @@ const App = () => {
 				<DashboardLayoutRoot>
 					<Container>
 						<Routes>
-							<Route path='/' element={<Navigate to='/home' />} />
-							<Route path='/home' element={<Home />} />
+							<Route path='/' element={<Navigate to='/courses' />} />
 							<Route path='/courses' element={<Courses />} />
 							<Route path='/auth/signin' element={<Login />} />
 							<Route path='/user' element={<Account />} />
