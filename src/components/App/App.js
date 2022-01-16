@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '../Error/Error';
-import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
@@ -25,7 +24,6 @@ const App = () => {
 							<Route path='/courses' element={<Courses />} />
 							<Route path='/auth/signin' element={<Login />} />
 
-							<Route path='/user' element={<Account />} />
 							<Route path='users' element={<Users />} />
 							<Route path='users/:id' element={<UserDetail />} />
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />

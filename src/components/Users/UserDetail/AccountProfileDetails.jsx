@@ -17,7 +17,7 @@ const states = [
 	}
 ];
 
-const AccountProfileDetails = (props) => {
+const AccountProfileDetails = ({ user }) => {
 	const [values, setValues] = useState({
 		firstName: 'Katarina',
 		lastName: 'Smith',
@@ -35,7 +35,7 @@ const AccountProfileDetails = (props) => {
 	};
 
 	return (
-		<form autoComplete='off' noValidate {...props}>
+		<form autoComplete='off' noValidate>
 			<Card>
 				<CardHeader subheader='The information can be edited' title='Profile' />
 				<Divider />

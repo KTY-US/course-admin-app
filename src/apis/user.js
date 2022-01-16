@@ -4,3 +4,5 @@ import API from './helper';
 
 export const getUsers = (page, rowsPerPage, sortMode) =>
 	API.get(`/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`);
+
+export const getUser = (userId) => API.get(`/users/${userId}`);

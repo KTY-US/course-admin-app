@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Container, Grid, Typography, Button } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 import AccountProfile from './AccountProfile';
 import AccountProfileDetails from './AccountProfileDetails';
+import { getUser } from '../../../apis/user';
+import { getUserInformationFromStorage } from '../../../helpers/localStorage';
 
 const UserDetail = () => {
 	const navigate = useNavigate();
 	const { id: userId } = useParams();
+	const [userData, setUserData] = useState([]);
 
 	const handleGoBack = () => {
 		navigate(-1);
 	};
+
+	console.log(userData);
+
+	useEffect(async () => {
+		const { data } = await getUser(userId);
+		setUserData(data);
+	}, []);
 
 	return (
 		<>
@@ -20,7 +30,7 @@ const UserDetail = () => {
 				component='main'
 				sx={{
 					flexGrow: 1,
-					py: 4
+					py: 3
 				}}
 			>
 				<Container maxWidth='lg'>
@@ -35,10 +45,10 @@ const UserDetail = () => {
 					</Typography>
 					<Grid container spacing={3}>
 						<Grid item lg={4} md={6} xs={12}>
-							<AccountProfile />
+							<AccountProfile user={userData} />
 						</Grid>
 						<Grid item lg={8} md={6} xs={12}>
-							<AccountProfileDetails />
+							<AccountProfileDetails user={userData} />
 						</Grid>
 					</Grid>
 				</Container>
