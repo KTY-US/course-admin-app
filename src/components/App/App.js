@@ -10,9 +10,11 @@ import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
+import { getUserInformationFromStorage } from '../../helpers/localStorage';
 
 const theme = createTheme();
 const App = () => {
+	
 	return (
 		<BrowserRouter>
 			<ThemeProvider theme={theme}>
