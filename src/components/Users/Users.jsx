@@ -42,12 +42,6 @@ const columns = [
 		label: 'User code',
 		minWidth: 50,
 		align: 'center'
-	},
-	{
-		id: 'status',
-		label: 'Status',
-		minWidth: 50,
-		align: 'center'
 	}
 ];
 

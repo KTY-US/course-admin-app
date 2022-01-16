@@ -6,3 +6,7 @@ export const getUsers = (page, rowsPerPage, sortMode) =>
 	API.get(`/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`);
 
 export const getUser = (userId) => API.get(`/users/${userId}`);
+
+export const changeStatus = (userId) => API.put(`/users/change-lock-status/${userId}`);
+
+export const checkUserCode = (data) => API.post(`/users/check-code/${data.userId}`, { code: data.code });

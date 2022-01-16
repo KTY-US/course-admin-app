@@ -24,7 +24,6 @@ const User = ({ user, stt }) => {
 					<TableCell>{getFullName(user.firstName, user.lastName)}</TableCell>
 					<TableCell>{user.email}</TableCell>
 					<TableCell align='center'>{user.userCode}</TableCell>
-					<TableCell align='center'>{user.status}</TableCell>
 				</TableRow>
 			)}
 		</>

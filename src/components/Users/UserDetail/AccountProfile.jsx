@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Avatar, Box, Button, Card, CardActions, CardContent, Divider, Typography } from '@mui/material';
 
-const user = {
-	avatar: '/static/images/avatars/avatar_6.png',
-	city: 'Los Angeles',
-	country: 'USA',
-	jobTitle: 'Senior Developer',
-	name: 'Katarina Smith'
-};
+import { changeStatus } from '../../../apis/user';
 
 const AccountProfile = ({ user }) => {
+	const [statusAccount, setStatusAccount] = useState(user ? user.status : '');
+	const handleChangeStatus = async () => {
+		const res = await changeStatus(user.id);
+
+		if (res) {
+			if (user.status === 'blocked') {
+				setStatusAccount('active');
+			} else if (user.status === 'active') {
+				setStatusAccount('blocked');
+			}
+		}
+	};
 	return (
 		<>
 			{user && (
@@ -37,8 +43,9 @@ const AccountProfile = ({ user }) => {
 					</CardContent>
 					<Divider />
 					<CardActions>
-						<Button color='primary' fullWidth variant='text'>
-							Block
+						<Button color='primary' fullWidth variant='text' onClick={handleChangeStatus}>
+							{statusAccount === 'active' && 'Block'}
+							{statusAccount === 'blocked' && 'Unblock'}
 						</Button>
 					</CardActions>
 				</Card>
