@@ -10,11 +10,10 @@ import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
-import { getUserInformationFromStorage } from '../../helpers/localStorage';
+import PrivateRoute from '../Routes/PrivateRoute';
 
 const theme = createTheme();
 const App = () => {
-	
 	return (
 		<BrowserRouter>
 			<ThemeProvider theme={theme}>
@@ -22,7 +21,14 @@ const App = () => {
 					<Container>
 						<Routes>
 							<Route path='/' element={<Navigate to='/courses' />} />
-							<Route path='/courses' element={<Courses />} />
+							<Route
+								path='/courses'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
 							<Route path='/auth/signin' element={<Login />} />
 							<Route path='/user' element={<Account />} />
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />

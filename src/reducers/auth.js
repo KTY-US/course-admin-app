@@ -12,7 +12,8 @@ const initialAuthState = {
 	signInPending: false,
 	isProfileLoading: false,
 	authData: null,
-	userInfo: {}
+	userInfo: {},
+	isSignInEd: false
 };
 const authKeys = ['userId', 'token', 'firstName', 'lastName', 'role'];
 const profileKeys = ['firstName', 'lastName'];
@@ -38,6 +39,8 @@ const authSlice = createSlice({
 				state.email = data['email'];
 				state.userInfo = profileKeys.reduce((o, key) => ({ ...o, [key]: data[key] }), {});
 			}
+
+			state.isSignInEd = !state.isSignInEd;
 		},
 		storeProfile(state, action) {
 			const data = action?.payload;
@@ -47,6 +50,7 @@ const authSlice = createSlice({
 		freeUser(state) {
 			deleteUserInformationFromStorage();
 			state.authData = null;
+			state.isSignInEd = !state.isSignInEd;
 		},
 		updateProfile(state, action) {
 			const data = action?.payload;

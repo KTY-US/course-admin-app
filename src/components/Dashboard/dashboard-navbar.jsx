@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar, IconButton, MenuItem, Menu, Typography, Avatar } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
 import { AccountCircle } from '@mui/icons-material';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import jwt_decode from 'jwt-decode';
-
-import { authActions } from '../../reducers/auth';
-import { getUserInformationFromStorage } from '../../helpers/localStorage';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper,
@@ -20,10 +15,7 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 export const DashboardNavbar = (props) => {
 	const { onSidebarOpen, ...other } = props;
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const location = useLocation();
-	const [user, setUser] = useState(getUserInformationFromStorage());
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -47,24 +39,6 @@ export const DashboardNavbar = (props) => {
 		setMobileMoreAnchorEl(event.currentTarget);
 	};
 
-	useEffect(() => {
-		setUser(getUserInformationFromStorage());
-		const token = user?.token;
-
-		if (token) {
-			const decodedToken = jwt_decode(token);
-			if (decodedToken.exp * 1000 < new Date().getTime()) {
-				logout();
-			}
-		}
-	}, [location]);
-
-	const logout = () => {
-		dispatch(authActions.freeUser());
-		setUser(null);
-		window.location.replace('/');
-	};
-
 	const handleSignIn = () => {
 		handleMobileMenuClose();
 		navigate('/auth/signin');
@@ -72,12 +46,12 @@ export const DashboardNavbar = (props) => {
 
 	const handleSignOut = () => {
 		handleMenuClose();
-		logout();
+		props.logout();
 	};
 
 	const handleMyAccount = () => {
 		handleMenuClose();
-		navigate(`user/${user?.userId}`);
+		navigate(`user/${props?.user?.userId}`);
 	};
 
 	const menuId = 'primary-search-account-menu';
@@ -117,7 +91,7 @@ export const DashboardNavbar = (props) => {
 			transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 			anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 		>
-			<MenuItem component={Link} to={`user/${user?.userId}`} onClick={handleMyAccount}>
+			<MenuItem component={Link} to={`user/${props?.user?.userId}`} onClick={handleMyAccount}>
 				My Profile
 			</MenuItem>
 			<MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
@@ -161,7 +135,7 @@ export const DashboardNavbar = (props) => {
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
 		>
-			{user ? (
+			{props?.user ? (
 				<div>
 					<MenuItem onClick={handleProfileMenuOpen}>
 						<IconButton
@@ -235,7 +209,7 @@ export const DashboardNavbar = (props) => {
 					</Typography>
 					<Box sx={{ flexGrow: 1 }} />
 					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-						{user ? (
+						{props?.user ? (
 							<>
 								<IconButton
 									size='large'
@@ -246,8 +220,8 @@ export const DashboardNavbar = (props) => {
 									onClick={handleProfileMenuOpen}
 									color='inherit'
 								>
-									<Avatar sx={{ bgcolor: deepPurple[600] }} alt={user?.firstName}>
-										{user?.firstName?.charAt(0).toUpperCase()}
+									<Avatar sx={{ bgcolor: deepPurple[600] }} alt={props?.user?.firstName}>
+										{props?.user?.firstName?.charAt(0).toUpperCase()}
 									</Avatar>
 								</IconButton>
 							</>
