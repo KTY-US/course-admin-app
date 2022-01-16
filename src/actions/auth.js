@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 import * as api from '../apis/auth';
 import { authActions } from '../reducers/auth';
 
@@ -19,4 +21,17 @@ export const signIn = (formData, navigate, setErrorCredential) => async (dispatc
 export const changeLoading = () => async (dispatch) => {
 	dispatch(authActions.changeIsLoading(true));
 	dispatch(authActions.changeSignUpPending(false));
+};
+
+export const changePassword = (form, userId, navigate) => async (dispatch) => {
+	try {
+		await api.changePassword(form, userId);
+		navigate('/auth/signin');
+		await dispatch(authActions.freeUser());
+		toast.success('Change password successfully!');
+	} catch (error) {
+		toast.error(error.message);
+	} finally {
+		//not thing
+	}
 };

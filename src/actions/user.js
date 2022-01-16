@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-import * as API from '../api/user';
+import * as API from '../<i class="fas fa-app-store-ios    "></i>/user';
 import { authActions } from '../reducers/auth';
 
 export const updateProfile = (formData, navigate, setErrorCredential) => async (dispatch) => {
