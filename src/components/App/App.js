@@ -10,6 +10,7 @@ import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
+import Users from '../Users/Users';
 
 const theme = createTheme();
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
 							<Route path='/courses' element={<Courses />} />
 							<Route path='/auth/signin' element={<Login />} />
 							<Route path='/user' element={<Account />} />
+							<Route path='users' element={<Users />} />
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
 						</Routes>

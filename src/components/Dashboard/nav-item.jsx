@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Button, ListItem } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const NavItem = (props) => {
 	const { href, icon, title, ...others } = props;
@@ -19,7 +20,8 @@ export const NavItem = (props) => {
 			{...others}
 		>
 			<Button
-				component='a'
+				component={Link}
+				to={href}
 				startIcon={icon}
 				disableRipple
 				sx={{
