@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '../Error/Error';
-import Account from '../Profile/Profile';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
@@ -29,6 +28,22 @@ const App = () => {
 									</PrivateRoute>
 								}
 							/>
+							<Route
+								path='/admins'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/users'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
 							<Route path='/auth/signin' element={<Login />} />
 							{/* <Route
 								path='/account/change-password'
@@ -38,7 +53,6 @@ const App = () => {
 									</AuthRoute>
 								}
 							/> */}
-							<Route path='/user' element={<Account />} />
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
 						</Routes>

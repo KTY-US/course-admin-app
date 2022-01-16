@@ -1,13 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+
+import { createAdmin } from '../../../actions/admin';
+import useStyles from './styles';
 
 const MAX_LENGTH = 255;
 const MIN_LENGTH = 8;
 
 const validateForm = async (form) => {
-	let errors = { adminUsernameErr: '' };
+	let errors = { adminUsernameErr: '', firstNameErr: '', lastNameErr: '' };
 
 	if (form.username.trim().length === 0) {
 		errors.adminUsernameErr = 'Admin username is required!';
@@ -25,10 +28,14 @@ const validateForm = async (form) => {
 };
 
 const CreateAdminAccForm = ({ open, setOpen }) => {
+	const classes = useStyles();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [errors, setErrors] = useState({ adminUsernameErr: '' });
+	const [errors, setErrors] = useState({ adminUsernameErr: '', firstNameErr: '', lastNameErr: '' });
+	const [errorCredential, setErrorCredential] = useState('');
 	const adminUsernameRef = useRef();
+	const firstNameRef = useRef();
+	const lastNameRef = useRef();
 
 	const handleClose = () => {
 		setOpen(false);
@@ -37,14 +44,16 @@ const CreateAdminAccForm = ({ open, setOpen }) => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const form = {
-			username: adminUsernameRef.current.value
+			username: adminUsernameRef.current.value,
+			firstName: firstNameRef.current.value,
+			lastName: lastNameRef.current.value
 		};
 		let errors = await validateForm(form);
-		if (errors.adminUsernameErr !== '') {
+		if (errors.adminUsernameErr !== '' || errors.firstNameErr !== '' || errors.lastNameErr !== '') {
 			setErrors(errors);
 		} else {
 			console.log(form);
-			// dispatch(createCourse(form, navigate));
+			dispatch(createAdmin(form, navigate, setErrorCredential));
 			setOpen(false);
 		}
 	};
@@ -67,6 +76,35 @@ const CreateAdminAccForm = ({ open, setOpen }) => {
 						inputRef={adminUsernameRef}
 						helperText={errors.adminUsernameErr}
 					/>
+					<TextField
+						error={errors.firstNameErr?.length > 0}
+						margin='normal'
+						id='firstName'
+						label='First name'
+						type='text'
+						fullWidth
+						variant='outlined'
+						multiline={true}
+						inputRef={firstNameRef}
+						helperText={errors.firstNameErr}
+					/>
+					<TextField
+						error={errors.lastNameErr?.length > 0}
+						margin='normal'
+						id='lastName'
+						label='Last name'
+						type='text'
+						fullWidth
+						variant='outlined'
+						multiline={true}
+						inputRef={lastNameRef}
+						helperText={errors.lastNameErr}
+					/>
+					{errorCredential && (
+						<Typography className={classes.errorMessage} variant='outlined'>
+							{errorCredential}
+						</Typography>
+					)}
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color='error' variant='contained'>

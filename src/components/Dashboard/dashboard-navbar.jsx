@@ -65,9 +65,8 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 		window.location.replace('/');
 	};
 
-	const handleMyAccount = () => {
+	const handleChangePassword = () => {
 		handleMenuClose();
-		navigate(`user/${user?.userId}`);
 	};
 
 	const menuId = 'primary-search-account-menu';
@@ -107,9 +106,7 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 			transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 			anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 		>
-			<MenuItem component={Link} to={`user/${user?.userId}`} onClick={handleMyAccount}>
-				My Profile
-			</MenuItem>
+			<MenuItem onClick={handleChangePassword}>Change password</MenuItem>
 			<MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
 		</Menu>
 	);
