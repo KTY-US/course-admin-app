@@ -8,6 +8,7 @@ import { AccountCircle } from '@mui/icons-material';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { authActions } from '../../reducers/auth';
 
@@ -62,6 +63,8 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 		handleMenuClose();
 		navigate(`user/${user?.userId}`);
 	};
+
+	const handleAddAdmin = () => {};
 
 	const menuId = 'primary-search-account-menu';
 	const renderMenu = (
@@ -147,6 +150,7 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 			{user ? (
 				<div>
 					<MenuItem onClick={handleProfileMenuOpen}>
+						1'
 						<IconButton
 							size='large'
 							aria-label='account of current user'
@@ -220,6 +224,9 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 						{user ? (
 							<>
+								<IconButton size='large' type='button' justify='space-between' onClick={handleAddAdmin}>
+									<AddCircleIcon />
+								</IconButton>
 								<IconButton
 									size='large'
 									edge='end'
@@ -255,7 +262,6 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 							aria-controls={mobileMenuId}
 							aria-haspopup='true'
 							onClick={handleMobileMenuOpen}
-							color='inherit'
 						>
 							<MoreIcon />
 						</IconButton>
