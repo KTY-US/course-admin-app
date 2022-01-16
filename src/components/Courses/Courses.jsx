@@ -23,7 +23,7 @@ import Select from '@mui/material/Select';
 
 import { getCourses } from '../../actions/course';
 import Pagination from '../Pagination/Pagination';
-import Course from './Course/Course';
+import CourseRow from './Course/CourseRow';
 import { useQuery } from '../../helpers/queryString';
 
 const ROWS_PER_PAGE = -1;
@@ -82,7 +82,7 @@ const Courses = () => {
 				gutterBottom
 				sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
 			>
-				Courses
+				COURSE MANAGEMENT
 			</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
 				<Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
@@ -107,8 +107,8 @@ const Courses = () => {
 						<MenuItem value='none'>
 							<em>None</em>
 						</MenuItem>
-						<MenuItem value='time-asc'>ASC</MenuItem>
-						<MenuItem value='time-desc'>DESC</MenuItem>
+						<MenuItem value='time-asc'>Time ascending </MenuItem>
+						<MenuItem value='time-desc'>Time descending</MenuItem>
 					</Select>
 				</FormControl>
 			</Box>
@@ -132,7 +132,11 @@ const Courses = () => {
 							<TableBody>
 								{courses.map((course, index) => {
 									return (
-										<Course key={course.id} course={course} stt={page * rowsPerPage + index + 1} />
+										<CourseRow
+											key={course.id}
+											course={course}
+											stt={page * rowsPerPage + index + 1}
+										/>
 									);
 								})}
 							</TableBody>

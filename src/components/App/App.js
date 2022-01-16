@@ -1,5 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Container } from '@mui/material';
@@ -12,33 +11,30 @@ import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
-import Course from '../Courses/Course/Course';
+import CourseDetail from '../Courses/Course/CourseDetail';
 
-import store from '../../reducers';
 const theme = createTheme();
 const App = () => {
 	return (
 		<BrowserRouter>
-			<Provider store={store}>
-				<ThemeProvider theme={theme}>
-					<DashboardLayoutRoot>
-						<Container>
-							<Routes>
-								<Route path='/' element={<Navigate to='/courses' />} />
-								<Route path='/courses'>
-									<Route index element={<Courses />} />
-									<Route path=':courseId' element={<Course />} />
-								</Route>
-								<Route path='/auth/signin' element={<Login />} />
-								<Route path='/user' element={<Account />} />
-								<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
-								<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
-							</Routes>
-						</Container>
-						<ToastContainer autoClose={5000} />
-					</DashboardLayoutRoot>
-				</ThemeProvider>
-			</Provider>
+			<ThemeProvider theme={theme}>
+				<DashboardLayoutRoot>
+					<Container>
+						<Routes>
+							<Route path='/' element={<Navigate to='/courses' />} />
+							<Route path='/courses'>
+								<Route index element={<Courses />} />
+								<Route path=':courseId' element={<CourseDetail />} />
+							</Route>
+							<Route path='/auth/signin' element={<Login />} />
+							<Route path='/user' element={<Account />} />
+							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
+							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
+						</Routes>
+					</Container>
+					<ToastContainer autoClose={5000} />
+				</DashboardLayoutRoot>
+			</ThemeProvider>
 		</BrowserRouter>
 	);
 };
