@@ -40,7 +40,10 @@ const UserDetail = () => {
 					>
 						<KeyboardBackspaceIcon fontSize='small' /> Go back
 					</Button>
-					<Typography sx={{ mb: 3, mt: 1 }} variant='h4'>
+					<Typography
+						sx={{ mb: 3, mt: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+						variant='h4'
+					>
 						Account
 					</Typography>
 					<Grid container spacing={3}>
