@@ -10,14 +10,12 @@ const initialAuthState = {
 	isLoading: true,
 	ggSignInPending: false,
 	signInPending: false,
-	signUpPending: false,
 	isProfileLoading: false,
 	authData: null,
-	userInfo: {},
-	email: ''
+	userInfo: {}
 };
-const authKeys = ['userId', 'token', 'firstName', 'lastName', 'email'];
-const profileKeys = ['firstName', 'lastName', 'userCode'];
+const authKeys = ['userId', 'token', 'firstName', 'lastName'];
+const profileKeys = ['firstName', 'lastName'];
 
 const authSlice = createSlice({
 	name: 'auth',
@@ -26,17 +24,8 @@ const authSlice = createSlice({
 		changeIsLoading(state, action) {
 			state.isLoading = action.payload;
 		},
-		changeGGSignInPending(state, action) {
-			state.ggSignInPending = action.payload;
-		},
 		changeSignInPending(state, action) {
 			state.signInPending = action.payload;
-		},
-		changeSignUpPending(state, action) {
-			state.signUpPending = action.payload;
-		},
-		changeIsProfileLoading(state, action) {
-			state.isProfileLoading = action.payload;
 		},
 		storeUser(state, action) {
 			const data = action?.payload;

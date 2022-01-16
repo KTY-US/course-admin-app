@@ -1,8 +1,5 @@
-import { toast } from 'react-toastify';
-
 import * as api from '../api/auth';
 import { authActions } from '../reducers/auth';
-import { getUrlFromStorage, deleteUrlFromStorage } from '../helpers/localStorage';
 
 export const signIn = (formData, navigate, setErrorCredential) => async (dispatch) => {
 	try {
@@ -10,8 +7,7 @@ export const signIn = (formData, navigate, setErrorCredential) => async (dispatc
 		dispatch(authActions.changeSignInPending(true));
 		const { data } = await api.signIn(formData);
 		await dispatch(authActions.storeUser(data));
-		navigate(getUrlFromStorage(), { replace: true });
-		deleteUrlFromStorage();
+		navigate('/', { replace: true });
 	} catch ({ response }) {
 		setErrorCredential(response?.data.message);
 	} finally {
