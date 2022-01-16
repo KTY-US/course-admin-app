@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar, IconButton, MenuItem, Menu, Typography, Avatar } from '@mui/material';
@@ -8,14 +9,16 @@ import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
+import { authActions } from '../../reducers/auth';
+
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper,
 	boxShadow: theme.shadows[3]
 }));
 
-export const DashboardNavbar = (props) => {
-	const { onSidebarOpen, ...other } = props;
+export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -46,12 +49,18 @@ export const DashboardNavbar = (props) => {
 
 	const handleSignOut = () => {
 		handleMenuClose();
-		props.logout();
+		logout();
+	};
+
+	const logout = () => {
+		dispatch(authActions.freeUser());
+		setUser(null);
+		window.location.replace('/');
 	};
 
 	const handleMyAccount = () => {
 		handleMenuClose();
-		navigate(`user/${props?.user?.userId}`);
+		navigate(`user/${user?.userId}`);
 	};
 
 	const menuId = 'primary-search-account-menu';
@@ -91,7 +100,7 @@ export const DashboardNavbar = (props) => {
 			transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 			anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 		>
-			<MenuItem component={Link} to={`user/${props?.user?.userId}`} onClick={handleMyAccount}>
+			<MenuItem component={Link} to={`user/${user?.userId}`} onClick={handleMyAccount}>
 				My Profile
 			</MenuItem>
 			<MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
@@ -135,7 +144,7 @@ export const DashboardNavbar = (props) => {
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
 		>
-			{props?.user ? (
+			{user ? (
 				<div>
 					<MenuItem onClick={handleProfileMenuOpen}>
 						<IconButton
@@ -209,7 +218,7 @@ export const DashboardNavbar = (props) => {
 					</Typography>
 					<Box sx={{ flexGrow: 1 }} />
 					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-						{props?.user ? (
+						{user ? (
 							<>
 								<IconButton
 									size='large'
@@ -220,8 +229,8 @@ export const DashboardNavbar = (props) => {
 									onClick={handleProfileMenuOpen}
 									color='inherit'
 								>
-									<Avatar sx={{ bgcolor: deepPurple[600] }} alt={props?.user?.firstName}>
-										{props?.user?.firstName?.charAt(0).toUpperCase()}
+									<Avatar sx={{ bgcolor: deepPurple[600] }} alt={user?.firstName}>
+										{user?.firstName?.charAt(0).toUpperCase()}
 									</Avatar>
 								</IconButton>
 							</>

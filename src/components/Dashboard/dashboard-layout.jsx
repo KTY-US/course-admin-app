@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {  useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import jwt_decode from 'jwt-decode';
@@ -62,7 +62,7 @@ export const DashboardLayout = (props) => {
 							{children}
 						</Box>
 					</DashboardLayoutRoot>
-					<DashboardNavbar user={user} logout={logout} onSidebarOpen={() => setSidebarOpen(true)} />
+					<DashboardNavbar user={user} setUser={setUser} onSidebarOpen={() => setSidebarOpen(true)} />
 					<DashboardSidebar onClose={() => setSidebarOpen(false)} open={isSidebarOpen} />
 				</>
 			) : (
