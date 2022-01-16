@@ -13,8 +13,8 @@ import {
 	Grid
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { toast } from 'react-toastify';
 
+import { signIn } from '../../actions/auth';
 import useStyles from './styles';
 
 const validateForm = (form) => {
@@ -32,7 +32,7 @@ const Login = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { signInPending, ggSignInPending } = useSelector((state) => state.auth);
+	const { signInPending } = useSelector((state) => state.auth);
 	const [errors, setErrors] = useState({ usernameError: '', passwordError: '' });
 	const [errorCredential, setErrorCredential] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
@@ -49,8 +49,7 @@ const Login = () => {
 		if (errors.usernameError !== '' || errors.passwordError !== '') {
 			setErrors(errors);
 		} else {
-			console.log(form);
-			//dispatch(signIn(form, navigate, setErrorCredential));
+			dispatch(signIn(form, navigate, setErrorCredential));
 		}
 	};
 

@@ -14,7 +14,7 @@ const initialAuthState = {
 	authData: null,
 	userInfo: {}
 };
-const authKeys = ['userId', 'token', 'firstName', 'lastName'];
+const authKeys = ['userId', 'token', 'firstName', 'lastName', 'role'];
 const profileKeys = ['firstName', 'lastName'];
 
 const authSlice = createSlice({
