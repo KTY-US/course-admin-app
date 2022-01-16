@@ -30,6 +30,14 @@ const App = () => {
 								}
 							/>
 							<Route path='/auth/signin' element={<Login />} />
+							{/* <Route
+								path='/account/change-password'
+								element={
+									<AuthRoute>
+										<ChangePassword />
+									</AuthRoute>
+								}
+							/> */}
 							<Route path='/user' element={<Account />} />
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
