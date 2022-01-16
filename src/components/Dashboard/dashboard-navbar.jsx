@@ -11,6 +11,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { authActions } from '../../reducers/auth';
+import CreateAdminAccForm from '../Admins/Popup-CreateAdmin/CreateAdminAccount';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper,
@@ -23,9 +24,14 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+	const [open, setOpen] = useState(false);
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+	const handleClickOpenAddAdminAccount = () => {
+		setOpen(true);
+	};
 
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -63,8 +69,6 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 		handleMenuClose();
 		navigate(`user/${user?.userId}`);
 	};
-
-	const handleAddAdmin = () => {};
 
 	const menuId = 'primary-search-account-menu';
 	const renderMenu = (
@@ -175,6 +179,7 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 
 	return (
 		<>
+			{open && <CreateAdminAccForm open={open} setOpen={setOpen} />}
 			<DashboardNavbarRoot
 				sx={{
 					left: {
@@ -223,7 +228,12 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 						{user ? (
 							<>
-								<IconButton size='large' type='button' justify='space-between' onClick={handleAddAdmin}>
+								<IconButton
+									size='large'
+									type='button'
+									justify='space-between'
+									onClick={handleClickOpenAddAdminAccount}
+								>
 									<AddCircleIcon />
 								</IconButton>
 								<IconButton
