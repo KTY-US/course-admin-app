@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { updateProfile } from '../../actions/user';
-import { checkUserCode } from '../../api/user';
+import { checkUserCode } from '../../apifa-stack/user';
 import { getUserInformationFromStorage } from '../../helpers/localStorage';
 import DraggableDialog from './DraggableDialog';
 import useStyles from './styles';

@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '../Error/Error';
-import Account from '../Account/Account';
+import Account from '../Profile/Profile';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';

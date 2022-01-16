@@ -150,7 +150,6 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 			{user ? (
 				<div>
 					<MenuItem onClick={handleProfileMenuOpen}>
-						1'
 						<IconButton
 							size='large'
 							aria-label='account of current user'
