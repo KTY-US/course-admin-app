@@ -1,32 +1,18 @@
 import { toast } from 'react-toastify';
 
-import * as API from '../api/user';
-import { authActions } from '../reducers/auth';
+import * as api from '../apis/user';
+import { userActions } from '../reducers/user';
 
-export const updateProfile = (formData, navigate, setErrorCredential) => async (dispatch) => {
+export const getUsers = (page, rowPerPage, sortMode) => async (dispatch) => {
 	try {
-		dispatch(authActions.changeIsLoading(true));
-		const { data } = await API.updateProfile(formData);
-		await dispatch(authActions.updateProfile(data));
-		const { userId } = data;
-		navigate(`/user/${userId}`);
-		toast.success('Update profile successful!!!');
-	} catch ({ response }) {
-		setErrorCredential(response?.data.message);
+		dispatch(userActions.changeIsLoading(true));
+		const { data } = await api.getUsers(page, rowPerPage, sortMode);
+		dispatch(userActions.storeUsers(data));
+	} catch (error) {
+		toast.error(error.message);
 	} finally {
-		dispatch(authActions.changeIsLoading(false));
+		dispatch(userActions.changeIsLoading(false));
 	}
 };
 
-export const loadProfile = (formData, navigate) => async (dispatch) => {
-	try {
-		dispatch(authActions.changeIsProfileLoading(true));
-		const { data } = await API.loadProfile(formData);
-		await dispatch(authActions.storeProfile(data));
-	} catch ({ response }) {
-		navigate('/not-found');
-		toast.error(response?.data.message);
-	} finally {
-		dispatch(authActions.changeIsProfileLoading(false));
-	}
-};
+export const loadProfile = (formData, navigate) => async (dispatch) => {};

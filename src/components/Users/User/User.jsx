@@ -3,36 +3,31 @@ import { useNavigate } from 'react-router-dom';
 import { TableCell, TableRow } from '@mui/material';
 import moment from 'moment';
 
-const User = ({ course, stt }) => {
+const User = ({ user, stt }) => {
 	const navigate = useNavigate();
-	const openCourse = () => {
-		navigate(`/courses/${course.id}/c`);
+	const openUser = () => {
+		//navigate(`/courses/${course.id}/c`);
+	};
+	const getFullName = (firstName, lastName) => {
+		const fullName = firstName + ' ' + lastName;
+		if (fullName.length > 60) return fullName.slice(0, 60) + '...';
+
+		return fullName;
 	};
 	return (
 		<>
-			{/* nhớ if course? */}
-			<TableRow hover role='checkbox' onClick={openCourse} style={{ cursor: 'pointer' }}>
-				<TableCell component='th' scope='row' align='center'>
-					{/* {stt} */}1
-				</TableCell>
+			{user && (
+				<TableRow hover role='checkbox' onClick={openUser} style={{ cursor: 'pointer' }}>
+					<TableCell component='th' scope='row' align='center'>
+						{stt}
+					</TableCell>
 
-				<TableCell>
-					{/* {course.courseName.length > 60 ? course.courseName.slice(0, 60) + '...' : course.courseName} */}
-					Mon Hoc Dau tien
-				</TableCell>
-				<TableCell>
-					Bui Huynh Trung Tin
-					{/* {course?.owner?.firstName} {course?.owner?.lastName} */}
-				</TableCell>
-				<TableCell align='center'>
-					{/* {course?.schoolYear} */}
-					2021
-				</TableCell>
-				<TableCell align='center'>
-					{/* {moment(course?.createdAt).format('DD-MM-YYYY')} */}
-					{moment('20/12/2021').format('DD-MM-YYYY')}
-				</TableCell>
-			</TableRow>
+					<TableCell>{getFullName(user.firstName, user.lastName)}</TableCell>
+					<TableCell>{user.email}</TableCell>
+					<TableCell align='center'>{user.userCode}</TableCell>
+					<TableCell align='center'>{user.status}</TableCell>
+				</TableRow>
+			)}
 		</>
 	);
 };

@@ -21,7 +21,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import { getCourses } from '../../actions/course';
+import { getUsers } from '../../actions/user';
 import Pagination from '../Pagination/Pagination';
 import User from './User/User';
 import { useQuery } from '../../helpers/queryString';
@@ -31,21 +31,21 @@ const ROWS_PER_PAGE = -1;
 
 const columns = [
 	{ id: 'stt', label: 'STT', minWidth: 50, align: 'center' },
-	{ id: 'courseName', label: 'Course name', minWidth: 280 },
+	{ id: 'fullName', label: 'Full name', minWidth: 280 },
 	{
-		id: 'teacher',
-		label: 'Teacher',
+		id: 'email',
+		label: 'Email',
 		minWidth: 150
 	},
 	{
-		id: 'schoolYear',
-		label: 'School year',
+		id: 'userCode',
+		label: 'User code',
 		minWidth: 50,
 		align: 'center'
 	},
 	{
-		id: 'startDate',
-		label: 'Start date',
+		id: 'status',
+		label: 'Status',
 		minWidth: 50,
 		align: 'center'
 	}
@@ -55,11 +55,10 @@ const Users = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const query = useQuery();
-	// const { isLoading, courses, total } = useSelector((state) => state.course);
+	const { isLoading, users, total } = useSelector((state) => state.user);
 	const [rowsPerPage, setRowsPerPage] = useState(+query.get('rowsPerPage') || ROWS_PER_PAGE);
 	const [page, setPage] = useState(+query.get('page') || 0);
-	const total = 10;
-	const isLoading = false;
+	const [sortMode, setSortMode] = useState(query.get('sortMode') || 'time-desc');
 	const numberOfPages = Math.ceil(total / rowsPerPage) - 1 < 0 ? 0 : Math.ceil(total / rowsPerPage) - 1;
 
 	if (rowsPerPage < -1) {
@@ -72,11 +71,10 @@ const Users = () => {
 		setAge(event.target.value);
 	};
 
-	// useEffect(() => {
-	// 	const userId = getUserInformationFromStorage().userId;
-	// 	navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}`, { replace: true });
-	// 	dispatch(getCourses(page + 1, rowsPerPage, userId));
-	// }, [page, rowsPerPage]);
+	useEffect(() => {
+		navigate(`/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`, { replace: true });
+		dispatch(getUsers(page + 1, rowsPerPage, sortMode));
+	}, [page, rowsPerPage]);
 
 	const coursesJSX = isLoading ? (
 		<LinearProgress />
@@ -87,7 +85,7 @@ const Users = () => {
 				gutterBottom
 				sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
 			>
-				Courses
+				Users
 			</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
 				<Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
@@ -109,9 +107,6 @@ const Users = () => {
 						label='Sort By Time'
 						onChange={handleChange}
 					>
-						<MenuItem value=''>
-							<em>None</em>
-						</MenuItem>
 						<MenuItem value={10}>ASC</MenuItem>
 						<MenuItem value={20}>DESC</MenuItem>
 					</Select>
@@ -120,7 +115,7 @@ const Users = () => {
 			{total > 0 ? (
 				<Paper sx={{ width: '100%', overflow: 'hidden' }}>
 					<TableContainer>
-						<Table stickyHeader aria-label='sticky table'>
+						<Table aria-label='sticky table'>
 							<TableHead>
 								<TableRow>
 									{columns.map((column) => (
@@ -135,14 +130,9 @@ const Users = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{/* {courses.map((course, index) => {
-									return (
-										<Course key={course.id} course={course} stt={page * rowsPerPage + index + 1} />
-									);
-								})} */}
-								<User />
-								<User />
-								<User />
+								{users.map((user, index) => {
+									return <User key={user.id} user={user} stt={page * rowsPerPage + index + 1} />;
+								})}
 							</TableBody>
 						</Table>
 					</TableContainer>
