@@ -1,11 +1,11 @@
 import React from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import { Box, Button, ListItem } from '@mui/material';
 
 export const NavItem = (props) => {
 	const { href, icon, title, ...others } = props;
-	// const router = useRouter();
-	// const active = href ? router.pathname === href : false;
-	const active = false;
+	const location = useLocation();
+	const active = href ? location.pathname === href : false;
 
 	return (
 		<ListItem
@@ -19,7 +19,8 @@ export const NavItem = (props) => {
 			{...others}
 		>
 			<Button
-				component='a'
+				component={Link}
+				to={href}
 				startIcon={icon}
 				disableRipple
 				sx={{
