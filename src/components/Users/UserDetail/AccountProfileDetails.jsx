@@ -6,11 +6,17 @@ import { checkUserCode } from '../../../apis/user';
 const AccountProfileDetails = ({ user }) => {
 	const [userCode, setUserCode] = useState('');
 	const [userCodeError, setUserCodeError] = useState('');
+	const [isEnableChanged, setIsEnableChanged] = useState(false);
 
 	const handleChange = (event) => {
 		event.preventDefault();
 		const userCode = event.target.value;
 		setUserCode(userCode);
+		if (userCode !== '') {
+			setIsEnableChanged(true);
+		} else {
+			setIsEnableChanged(false);
+		}
 	};
 
 	const handleCheckUserCode = async (event) => {
@@ -18,7 +24,7 @@ const AccountProfileDetails = ({ user }) => {
 		if (userCode !== '') {
 			try {
 				const { data: checkResult } = await checkUserCode({ code: userCode, userId: user.id });
-				console.log(checkResult);
+
 				if (checkResult.isExisted) {
 					setUserCodeError('This user code has already existed');
 				} else {
@@ -90,7 +96,7 @@ const AccountProfileDetails = ({ user }) => {
 							p: 2
 						}}
 					>
-						<Button color='primary' variant='contained'>
+						<Button color='primary' variant='contained' disabled={!isEnableChanged}>
 							Save changes
 						</Button>
 					</Box>

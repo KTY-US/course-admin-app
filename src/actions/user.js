@@ -3,10 +3,11 @@ import { toast } from 'react-toastify';
 import * as api from '../apis/user';
 import { userActions } from '../reducers/user';
 
-export const getUsers = (page, rowPerPage, sortMode) => async (dispatch) => {
+export const getUsers = (page, rowPerPage, sortMode, searchString) => async (dispatch) => {
 	try {
 		dispatch(userActions.changeIsLoading(true));
-		const { data } = await api.getUsers(page, rowPerPage, sortMode);
+		console.log(searchString);
+		const { data } = await api.getUsers(page, rowPerPage, sortMode, searchString);
 		dispatch(userActions.storeUsers(data));
 	} catch (error) {
 		toast.error(error.message);
@@ -14,5 +15,3 @@ export const getUsers = (page, rowPerPage, sortMode) => async (dispatch) => {
 		dispatch(userActions.changeIsLoading(false));
 	}
 };
-
-export const loadProfile = (formData, navigate) => async (dispatch) => {};
