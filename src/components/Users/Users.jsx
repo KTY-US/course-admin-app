@@ -65,16 +65,14 @@ const Users = () => {
 		setRowsPerPage(-1);
 	}
 
-	const [age, setAge] = React.useState('');
-
 	const handleChange = (event) => {
-		setAge(event.target.value);
+		setSortMode(event.target.value);
 	};
 
 	useEffect(() => {
 		navigate(`/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`, { replace: true });
 		dispatch(getUsers(page + 1, rowsPerPage, sortMode));
-	}, [page, rowsPerPage]);
+	}, [page, rowsPerPage, sortMode]);
 
 	const coursesJSX = isLoading ? (
 		<LinearProgress />
@@ -103,12 +101,12 @@ const Users = () => {
 					<Select
 						labelId='demo-simple-select-helper-label'
 						id='demo-simple-select-helper'
-						value={age}
+						value={sortMode}
 						label='Sort By Time'
 						onChange={handleChange}
 					>
-						<MenuItem value={10}>ASC</MenuItem>
-						<MenuItem value={20}>DESC</MenuItem>
+						<MenuItem value='time-asc'>ASC</MenuItem>
+						<MenuItem value='time-desc'>DESC</MenuItem>
 					</Select>
 				</FormControl>
 			</Box>

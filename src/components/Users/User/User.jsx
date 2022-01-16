@@ -1,12 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TableCell, TableRow } from '@mui/material';
-import moment from 'moment';
 
 const User = ({ user, stt }) => {
 	const navigate = useNavigate();
 	const openUser = () => {
-		//navigate(`/courses/${course.id}/c`);
+		navigate(`/users/${user.id}`);
 	};
 	const getFullName = (firstName, lastName) => {
 		const fullName = firstName + ' ' + lastName;
