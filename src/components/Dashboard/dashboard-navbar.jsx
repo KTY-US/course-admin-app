@@ -12,6 +12,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { authActions } from '../../reducers/auth';
 import CreateAdminAccForm from '../Admins/Popup-CreateAdmin/CreateAdminAccount';
+import ChangePasswordForm from '../Auth/ChangePassword/ChangePassword';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper,
@@ -25,6 +26,7 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 	const [open, setOpen] = useState(false);
+	const [openChangePasswordForm, setOpenChangePasswordForm] = useState(false);
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -67,6 +69,7 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 
 	const handleChangePassword = () => {
 		handleMenuClose();
+		setOpenChangePasswordForm(true);
 	};
 
 	const menuId = 'primary-search-account-menu';
@@ -177,6 +180,9 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 	return (
 		<>
 			{open && <CreateAdminAccForm open={open} setOpen={setOpen} />}
+			{openChangePasswordForm && (
+				<ChangePasswordForm open={openChangePasswordForm} setOpen={setOpenChangePasswordForm} />
+			)}
 			<DashboardNavbarRoot
 				sx={{
 					left: {
