@@ -57,6 +57,8 @@ const Courses = () => {
 	const { isLoading = false, courses, total } = useSelector((state) => state.course);
 	const [rowsPerPage, setRowsPerPage] = useState(+query.get('rowsPerPage') || ROWS_PER_PAGE);
 	const [page, setPage] = useState(+query.get('page') || 0);
+	const [searchString, setSearchString] = useState(query.get('search') || '');
+
 	const [sortMode, setSortMode] = useState('time-desc');
 	const numberOfPages = Math.ceil(total / rowsPerPage) - 1 < 0 ? 0 : Math.ceil(total / rowsPerPage) - 1;
 
@@ -68,10 +70,25 @@ const Courses = () => {
 		const { value } = event.target;
 		setSortMode(value);
 	};
+	const handleSearch = (event) => {
+		event.preventDefault();
+		const data = new FormData(event.currentTarget);
+		const search = data.get('search');
+		setSearchString(search);
+	};
 	useEffect(() => {
-		navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`, { replace: true });
-		dispatch(getCourses(page + 1, rowsPerPage, sortMode));
-	}, [page, rowsPerPage, sortMode]);
+		let url = `/courses?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`;
+
+		if (searchString !== '') {
+			const encodedSearch = encodeURIComponent(searchString);
+			url = url + `&search=${encodedSearch}`;
+			dispatch(getCourses(page + 1, rowsPerPage, sortMode, encodedSearch));
+		} else {
+			dispatch(getCourses(page + 1, rowsPerPage, sortMode));
+		}
+
+		navigate(url, { replace: true });
+	}, [page, rowsPerPage, sortMode, searchString]);
 
 	const coursesJSX = isLoading ? (
 		<LinearProgress />
@@ -85,11 +102,17 @@ const Courses = () => {
 				COURSE MANAGEMENT
 			</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-				<Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
+				<Paper
+					component='form'
+					onSubmit={handleSearch}
+					sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+				>
 					<InputBase
 						sx={{ ml: 1, flex: 1 }}
 						placeholder='Search Name or Email'
 						inputProps={{ 'aria-label': 'search google maps' }}
+						name='search'
+						defaultValue={searchString}
 					/>
 					<IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
 						<SearchIcon />

@@ -5,10 +5,10 @@ import { courseActions } from '../reducers/course.js';
 import { courseDetailActions } from '../reducers/courseDetail.js';
 // import { getUserInformationFromStorage } from '../helpers/localStorage';
 
-export const getCourses = (page, rowPerPage, sortMode) => async (dispatch) => {
+export const getCourses = (page, rowPerPage, sortMode, searchString) => async (dispatch) => {
 	try {
 		dispatch(courseActions.changeIsLoading(true));
-		const { data } = await api.getCourses(page, rowPerPage, sortMode);
+		const { data } = await api.getCourses(page, rowPerPage, sortMode, searchString);
 		dispatch(courseActions.storeCourses(data));
 	} catch (error) {
 		toast.error(error.message);
