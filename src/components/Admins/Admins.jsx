@@ -21,7 +21,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import { getUsers } from '../../actions/user';
+import { getAdmins } from '../../actions/admin';
 import Pagination from '../Pagination/Pagination';
 import Admin from './Admin/Admin';
 import { useQuery } from '../../helpers/queryString';
@@ -54,7 +54,7 @@ const Admins = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const query = useQuery();
-	const { isLoading, users, total } = useSelector((state) => state.user);
+	const { isLoading, admins, total } = useSelector((state) => state.admin);
 	const [rowsPerPage, setRowsPerPage] = useState(+query.get('rowsPerPage') || ROWS_PER_PAGE);
 	const [page, setPage] = useState(+query.get('page') || 0);
 	const [sortMode, setSortMode] = useState(query.get('sortMode') || 'time-desc');
@@ -76,15 +76,15 @@ const Admins = () => {
 		setSearchString(search);
 	};
 	useEffect(() => {
-		// let url = `/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`;
-		// if (searchString !== '') {
-		// 	const encodedSearch = encodeURIComponent(searchString);
-		// 	url = url + `&search=${encodedSearch}`;
-		// 	dispatch(getUsers(page + 1, rowsPerPage, sortMode, encodedSearch));
-		// } else {
-		// 	dispatch(getUsers(page + 1, rowsPerPage, sortMode, ''));
-		// }
-		// navigate(url, { replace: true });
+		let url = `/admins?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`;
+		if (searchString !== '') {
+			const encodedSearch = encodeURIComponent(searchString);
+			url = url + `&search=${encodedSearch}`;
+			dispatch(getAdmins(page + 1, rowsPerPage, sortMode, encodedSearch));
+		} else {
+			dispatch(getAdmins(page + 1, rowsPerPage, sortMode, ''));
+		}
+		navigate(url, { replace: true });
 	}, [page, rowsPerPage, sortMode, searchString]);
 
 	const coursesJSX = isLoading ? (
@@ -96,7 +96,7 @@ const Admins = () => {
 				gutterBottom
 				sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
 			>
-				Users
+				Admin
 			</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
 				<Paper
@@ -146,7 +146,7 @@ const Admins = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{users.map((user, index) => {
+								{admins.map((user, index) => {
 									return <Admin key={user.id} user={user} stt={page * rowsPerPage + index + 1} />;
 								})}
 							</TableBody>
@@ -162,7 +162,7 @@ const Admins = () => {
 				</Paper>
 			) : (
 				<Typography variant='h5' gutterBottom>
-					You have {total} user.
+					You have {total} admin(s).
 				</Typography>
 			)}
 		</>
