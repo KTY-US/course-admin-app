@@ -25,6 +25,7 @@ import { getAdmins } from '../../actions/admin';
 import Pagination from '../Pagination/Pagination';
 import Admin from './Admin/Admin';
 import { useQuery } from '../../helpers/queryString';
+import { getUserInformationFromStorage } from '../../helpers/localStorage';
 
 const ROWS_PER_PAGE = -1;
 
@@ -50,6 +51,7 @@ const columns = [
 ];
 
 const Admins = () => {
+	const user = getUserInformationFromStorage();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const query = useQuery();
@@ -171,7 +173,15 @@ const Admins = () => {
 		<>
 			<br />
 			<br />
-			{coursesJSX}
+			{user?.role === 'manager' ? (
+				<>{coursesJSX}</>
+			) : (
+				<>
+					<Typography variant='h5' gutterBottom display='flex' justifyContent='center' color='red'>
+						You are not authorized to do this
+					</Typography>
+				</>
+			)}
 		</>
 	);
 };

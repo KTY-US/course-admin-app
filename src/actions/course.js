@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import * as api from '../apis/course.js';
 import { courseActions } from '../reducers/course.js';
 import { courseDetailActions } from '../reducers/courseDetail.js';
-// import { getUserInformationFromStorage } from '../helpers/localStorage';
 
 export const getCourses = (page, rowPerPage, sortMode, searchString) => async (dispatch) => {
 	try {
@@ -16,7 +15,6 @@ export const getCourses = (page, rowPerPage, sortMode, searchString) => async (d
 		dispatch(courseActions.changeIsLoading(false));
 	}
 };
-
 
 export const getCourseDetails = (id) => async (dispatch) => {
 	try {
