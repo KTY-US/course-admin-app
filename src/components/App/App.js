@@ -6,10 +6,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '../Error/Error';
-import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
+import PrivateRoute from '../Routes/PrivateRoute';
 
 const theme = createTheme();
 const App = () => {
@@ -20,9 +20,39 @@ const App = () => {
 					<Container>
 						<Routes>
 							<Route path='/' element={<Navigate to='/courses' />} />
-							<Route path='/courses' element={<Courses />} />
+							<Route
+								path='/courses'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/admins'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/users'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
 							<Route path='/auth/signin' element={<Login />} />
-							<Route path='/user' element={<Account />} />
+							{/* <Route
+								path='/account/change-password'
+								element={
+									<AuthRoute>
+										<ChangePassword />
+									</AuthRoute>
+								}
+							/> */}
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
 						</Routes>
