@@ -12,10 +12,12 @@ import {
 	TableRow,
 	Typography,
 	IconButton,
-	Box
+	Box,
+	Button
 } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -26,6 +28,7 @@ import Pagination from '../Pagination/Pagination';
 import Admin from './Admin/Admin';
 import { useQuery } from '../../helpers/queryString';
 import { getUserInformationFromStorage } from '../../helpers/localStorage';
+import CreateAdminAccForm from './Popup-CreateAdmin/CreateAdminAccount';
 
 const ROWS_PER_PAGE = -1;
 
@@ -55,6 +58,7 @@ const Admins = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const query = useQuery();
+	const [open, setOpen] = useState(false);
 	const { isLoading, admins, total } = useSelector((state) => state.admin);
 	const [rowsPerPage, setRowsPerPage] = useState(+query.get('rowsPerPage') || ROWS_PER_PAGE);
 	const [page, setPage] = useState(+query.get('page') || 0);
@@ -65,6 +69,10 @@ const Admins = () => {
 	if (rowsPerPage < -1) {
 		setRowsPerPage(-1);
 	}
+
+	const handleClickOpenAddAdminAccount = () => {
+		setOpen(true);
+	};
 
 	const handleChange = (event) => {
 		setSortMode(event.target.value);
@@ -92,6 +100,7 @@ const Admins = () => {
 		<LinearProgress />
 	) : (
 		<>
+			{open && <CreateAdminAccForm open={open} setOpen={setOpen} />}
 			<Typography
 				variant='h4'
 				gutterBottom
@@ -99,6 +108,7 @@ const Admins = () => {
 			>
 				Admin
 			</Typography>
+
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
 				<Paper
 					onSubmit={handleSubmit}
@@ -128,6 +138,11 @@ const Admins = () => {
 						<MenuItem value='time-desc'>DESC</MenuItem>
 					</Select>
 				</FormControl>
+			</Box>
+			<Box style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
+				<Button variant='outlined' startIcon={<AddIcon />} onClick={handleClickOpenAddAdminAccount}>
+					Add admin account
+				</Button>
 			</Box>
 			{total > 0 ? (
 				<Paper sx={{ width: '100%', overflow: 'hidden' }}>

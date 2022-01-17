@@ -8,10 +8,8 @@ import { AccountCircle } from '@mui/icons-material';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { authActions } from '../../reducers/auth';
-import CreateAdminAccForm from '../Admins/Popup-CreateAdmin/CreateAdminAccount';
 import ChangePasswordForm from '../Auth/ChangePassword/ChangePassword';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
@@ -25,15 +23,10 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-	const [open, setOpen] = useState(false);
 	const [openChangePasswordForm, setOpenChangePasswordForm] = useState(false);
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-	const handleClickOpenAddAdminAccount = () => {
-		setOpen(true);
-	};
 
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -179,7 +172,6 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 
 	return (
 		<>
-			{open && <CreateAdminAccForm open={open} setOpen={setOpen} />}
 			{openChangePasswordForm && (
 				<ChangePasswordForm open={openChangePasswordForm} setOpen={setOpenChangePasswordForm} />
 			)}
@@ -231,14 +223,6 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 						{user ? (
 							<>
-								<IconButton
-									size='large'
-									type='button'
-									justify='space-between'
-									onClick={handleClickOpenAddAdminAccount}
-								>
-									<AddCircleIcon />
-								</IconButton>
 								<IconButton
 									size='large'
 									edge='end'
