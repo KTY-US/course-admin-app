@@ -15,6 +15,7 @@ import Users from '../Users/Users';
 import UserDetail from '../Users/UserDetail/UserDetail';
 import PrivateRoute from '../Routes/PrivateRoute';
 import Admins from '../Admins/Admins';
+import AdminDetail from '../Admins/AdminDetail/AdminDetail';
 
 const theme = createTheme();
 const App = () => {
@@ -43,14 +44,24 @@ const App = () => {
 									}
 								/>
 							</Route>
-							<Route
-								path='/admins'
-								element={
-									<PrivateRoute>
-										<Admins />
-									</PrivateRoute>
-								}
-							/>
+							<Route path='/admins'>
+								<Route
+									index
+									element={
+										<PrivateRoute>
+											<Admins />
+										</PrivateRoute>
+									}
+								/>
+								<Route
+									path=':id'
+									element={
+										<PrivateRoute>
+											<AdminDetail />
+										</PrivateRoute>
+									}
+								/>
+							</Route>
 							<Route path='/users'>
 								<Route
 									index
