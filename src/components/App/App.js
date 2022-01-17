@@ -14,6 +14,7 @@ import CourseDetail from '../Courses/Course/CourseDetail';
 import Users from '../Users/Users';
 import UserDetail from '../Users/UserDetail/UserDetail';
 import PrivateRoute from '../Routes/PrivateRoute';
+import Admins from '../Admins/Admins';
 
 const theme = createTheme();
 const App = () => {
@@ -32,7 +33,7 @@ const App = () => {
 								path='/admins'
 								element={
 									<PrivateRoute>
-										<Courses />
+										<Admins />
 									</PrivateRoute>
 								}
 							/>

@@ -23,7 +23,7 @@ import Select from '@mui/material/Select';
 
 import { getUsers } from '../../actions/user';
 import Pagination from '../Pagination/Pagination';
-import User from './User/User';
+import Admin from './Admin/Admin';
 import { useQuery } from '../../helpers/queryString';
 
 const ROWS_PER_PAGE = -1;
@@ -141,7 +141,7 @@ const Admins = () => {
 							</TableHead>
 							<TableBody>
 								{users.map((user, index) => {
-									return <User key={user.id} user={user} stt={page * rowsPerPage + index + 1} />;
+									return <Admin key={user.id} user={user} stt={page * rowsPerPage + index + 1} />;
 								})}
 							</TableBody>
 						</Table>
