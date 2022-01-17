@@ -52,7 +52,6 @@ const CreateAdminAccForm = ({ open, setOpen }) => {
 		if (errors.adminUsernameErr !== '' || errors.firstNameErr !== '' || errors.lastNameErr !== '') {
 			setErrors(errors);
 		} else {
-			console.log(form);
 			dispatch(createAdmin(form, navigate, setErrorCredential));
 			setOpen(false);
 		}

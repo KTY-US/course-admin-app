@@ -1,17 +1,16 @@
 import { toast } from 'react-toastify';
 
-import * as API from '../apis/user';
-import { authActions } from '../reducers/auth';
+import * as api from '../apis/user';
+import { userActions } from '../reducers/user';
 
-export const loadProfile = (formData, navigate) => async (dispatch) => {
+export const getUsers = (page, rowPerPage, sortMode, searchString) => async (dispatch) => {
 	try {
-		dispatch(authActions.changeIsProfileLoading(true));
-		const { data } = await API.loadProfile(formData);
-		await dispatch(authActions.storeProfile(data));
-	} catch ({ response }) {
-		navigate('/not-found');
-		toast.error(response?.data.message);
+		dispatch(userActions.changeIsLoading(true));
+		const { data } = await api.getUsers(page, rowPerPage, sortMode, searchString);
+		dispatch(userActions.storeUsers(data));
+	} catch (error) {
+		toast.error(error.message);
 	} finally {
-		dispatch(authActions.changeIsProfileLoading(false));
+		dispatch(userActions.changeIsLoading(false));
 	}
 };

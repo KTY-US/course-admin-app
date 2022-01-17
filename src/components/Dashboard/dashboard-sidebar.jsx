@@ -13,7 +13,7 @@ const items = [
 		title: 'Admins'
 	},
 	{
-		href: '/customers',
+		href: '/users',
 		icon: <SupervisorAccountIcon fontSize='small' />,
 		title: 'Users'
 	},

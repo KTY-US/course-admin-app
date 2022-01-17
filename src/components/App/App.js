@@ -9,6 +9,8 @@ import Error from '../Error/Error';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
+import Users from '../Users/Users';
+import UserDetail from '../Users/UserDetail/UserDetail';
 import PrivateRoute from '../Routes/PrivateRoute';
 
 const theme = createTheme();
@@ -40,11 +42,20 @@ const App = () => {
 								path='/users'
 								element={
 									<PrivateRoute>
-										<Courses />
+										<Users />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/users/:id'
+								element={
+									<PrivateRoute>
+										<UserDetail />
 									</PrivateRoute>
 								}
 							/>
 							<Route path='/auth/signin' element={<Login />} />
+
 							{/* <Route
 								path='/account/change-password'
 								element={

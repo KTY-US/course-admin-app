@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Button, ListItem } from '@mui/material';
 
-export const NavItem = (props) => {
-	const { icon, title, ...others } = props;
+export const NavItem = ({ icon, title, ...others }) => {
 	const active = false;
 
 	return (
@@ -17,7 +16,6 @@ export const NavItem = (props) => {
 			{...others}
 		>
 			<Button
-				component='a'
 				startIcon={icon}
 				disableRipple
 				sx={{
