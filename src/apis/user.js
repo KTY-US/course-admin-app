@@ -10,3 +10,5 @@ export const getUser = (userId) => API.get(`/users/${userId}`);
 export const changeStatus = (userId) => API.put(`/users/change-lock-status/${userId}`);
 
 export const checkUserCode = (data) => API.post(`/users/check-code/${data.userId}`, { code: data.code });
+
+export const changeUserCode = (data) => API.put(`/users/change-code/${data.userId}`, { newCode: data.code });

@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { Box, Button, Card, CardContent, CardHeader, Divider, Grid, TextField } from '@mui/material';
 
 import { checkUserCode } from '../../../apis/user';
+import { changeUserCode } from '../../../actions/user';
 const AccountProfileDetails = ({ user }) => {
-	const [userCode, setUserCode] = useState('');
+	const [userCode, setUserCode] = useState('no-thing');
 	const [userCodeError, setUserCodeError] = useState('');
 	const [isEnableChanged, setIsEnableChanged] = useState(false);
 
@@ -12,29 +13,38 @@ const AccountProfileDetails = ({ user }) => {
 		event.preventDefault();
 		const userCode = event.target.value;
 		setUserCode(userCode);
-		if (userCode !== '') {
-			setIsEnableChanged(true);
-		} else {
-			setIsEnableChanged(false);
-		}
 	};
 
 	const handleCheckUserCode = async (event) => {
 		event.preventDefault();
-		if (userCode !== '') {
+
+		if (userCode !== 'no-thing') {
 			try {
 				const { data: checkResult } = await checkUserCode({ code: userCode, userId: user.id });
 
 				if (checkResult.isExisted) {
 					setUserCodeError('This user code has already existed');
+					setIsEnableChanged(false);
 				} else {
 					setUserCodeError('');
+					setIsEnableChanged(true);
 				}
 			} catch ({ response }) {
 				setUserCodeError(response?.data.message);
 			}
 		}
 	};
+
+	const handleChangeCode = async () => {
+		const data = {
+			userId: user.id,
+			code: userCode
+		};
+		await changeUserCode(data);
+		setIsEnableChanged(false);
+		setUserCode('no-thing');
+	};
+
 	return (
 		<>
 			{user && (
@@ -96,7 +106,12 @@ const AccountProfileDetails = ({ user }) => {
 							p: 2
 						}}
 					>
-						<Button color='primary' variant='contained' disabled={!isEnableChanged}>
+						<Button
+							color='primary'
+							variant='contained'
+							disabled={!isEnableChanged}
+							onClick={handleChangeCode}
+						>
 							Save changes
 						</Button>
 					</Box>
