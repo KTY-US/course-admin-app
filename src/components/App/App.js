@@ -11,6 +11,7 @@ import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
 import Users from '../Users/Users';
 import UserDetail from '../Users/UserDetail/UserDetail';
+import PrivateRoute from '../Routes/PrivateRoute';
 
 const theme = createTheme();
 const App = () => {
@@ -21,11 +22,48 @@ const App = () => {
 					<Container>
 						<Routes>
 							<Route path='/' element={<Navigate to='/courses' />} />
-							<Route path='/courses' element={<Courses />} />
+							<Route
+								path='/courses'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/admins'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/users'
+								element={
+									<PrivateRoute>
+										<Users />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/users/:id'
+								element={
+									<PrivateRoute>
+										<UserDetail />
+									</PrivateRoute>
+								}
+							/>
 							<Route path='/auth/signin' element={<Login />} />
 
-							<Route path='users' element={<Users />} />
-							<Route path='users/:id' element={<UserDetail />} />
+							{/* <Route
+								path='/account/change-password'
+								element={
+									<AuthRoute>
+										<ChangePassword />
+									</AuthRoute>
+								}
+							/> */}
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
 						</Routes>

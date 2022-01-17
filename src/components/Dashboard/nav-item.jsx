@@ -1,11 +1,7 @@
 import React from 'react';
 import { Box, Button, ListItem } from '@mui/material';
-import { Link } from 'react-router-dom';
 
-export const NavItem = (props) => {
-	const { href, icon, title, ...others } = props;
-	// const router = useRouter();
-	// const active = href ? router.pathname === href : false;
+export const NavItem = ({ icon, title, ...others }) => {
 	const active = false;
 
 	return (
@@ -20,8 +16,6 @@ export const NavItem = (props) => {
 			{...others}
 		>
 			<Button
-				component={Link}
-				to={href}
 				startIcon={icon}
 				disableRipple
 				sx={{
