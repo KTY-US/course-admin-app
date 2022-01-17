@@ -30,15 +30,21 @@ const ROWS_PER_PAGE = -1;
 
 const columns = [
 	{ id: 'stt', label: 'STT', minWidth: 50, align: 'center' },
-	{ id: 'fullName', label: 'Full name', minWidth: 280 },
+	{ id: 'username', label: 'username', minWidth: 280 },
 	{
-		id: 'email',
-		label: 'Email',
-		minWidth: 150
+		id: 'firstName',
+		label: 'First name',
+		minWidth: 80
 	},
 	{
-		id: 'userCode',
-		label: 'User code',
+		id: 'lastName',
+		label: 'Last name',
+		minWidth: 80,
+		align: 'center'
+	},
+	{
+		id: 'role',
+		label: 'Role',
 		minWidth: 50,
 		align: 'center'
 	}
@@ -70,15 +76,15 @@ const Admins = () => {
 		setSearchString(search);
 	};
 	useEffect(() => {
-		let url = `/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`;
-		if (searchString !== '') {
-			const encodedSearch = encodeURIComponent(searchString);
-			url = url + `&search=${encodedSearch}`;
-			dispatch(getUsers(page + 1, rowsPerPage, sortMode, encodedSearch));
-		} else {
-			dispatch(getUsers(page + 1, rowsPerPage, sortMode, ''));
-		}
-		navigate(url, { replace: true });
+		// let url = `/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`;
+		// if (searchString !== '') {
+		// 	const encodedSearch = encodeURIComponent(searchString);
+		// 	url = url + `&search=${encodedSearch}`;
+		// 	dispatch(getUsers(page + 1, rowsPerPage, sortMode, encodedSearch));
+		// } else {
+		// 	dispatch(getUsers(page + 1, rowsPerPage, sortMode, ''));
+		// }
+		// navigate(url, { replace: true });
 	}, [page, rowsPerPage, sortMode, searchString]);
 
 	const coursesJSX = isLoading ? (

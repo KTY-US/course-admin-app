@@ -5,14 +5,9 @@ import { TableCell, TableRow } from '@mui/material';
 const User = ({ user, stt }) => {
 	const navigate = useNavigate();
 	const openUser = () => {
-		navigate(`/users/${user.id}`);
+		navigate(`/admins/${user.id}`);
 	};
-	const getFullName = (firstName, lastName) => {
-		const fullName = firstName + ' ' + lastName;
-		if (fullName.length > 60) return fullName.slice(0, 60) + '...';
 
-		return fullName;
-	};
 	return (
 		<>
 			{user && (
@@ -21,9 +16,10 @@ const User = ({ user, stt }) => {
 						{stt}
 					</TableCell>
 
-					<TableCell>{getFullName(user.firstName, user.lastName)}</TableCell>
-					<TableCell>{user.email}</TableCell>
-					<TableCell align='center'>{user.userCode}</TableCell>
+					<TableCell>{user.username}</TableCell>
+					<TableCell>{user.firstName}</TableCell>
+					<TableCell>{user.lastName}</TableCell>
+					<TableCell align='center'>{user.role}</TableCell>
 				</TableRow>
 			)}
 		</>
