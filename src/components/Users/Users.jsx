@@ -30,7 +30,9 @@ const ROWS_PER_PAGE = -1;
 
 const columns = [
 	{ id: 'stt', label: 'STT', minWidth: 50, align: 'center' },
-	{ id: 'fullName', label: 'Full name', minWidth: 280 },
+	{ id: 'firstName', label: 'First name', minWidth: 150 },
+	{ id: 'lastName', label: 'Last name', minWidth: 150 },
+	{ id: 'fullName', label: 'Full name', minWidth: 150 },
 	{
 		id: 'email',
 		label: 'Email',
@@ -103,6 +105,7 @@ const Users = () => {
 						placeholder='Search Name or Email'
 						inputProps={{ 'aria-label': 'search google maps' }}
 						name='search'
+						defaultValue={searchString}
 					/>
 					<IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
 						<SearchIcon />
