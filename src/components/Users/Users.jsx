@@ -21,57 +21,65 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import { getCourses } from '../../actions/course';
+import { getUsers } from '../../actions/user';
 import Pagination from '../Pagination/Pagination';
-import CourseRow from './Course/CourseRow';
+import User from './User/User';
 import { useQuery } from '../../helpers/queryString';
 
 const ROWS_PER_PAGE = -1;
 
 const columns = [
 	{ id: 'stt', label: 'STT', minWidth: 50, align: 'center' },
-	{ id: 'courseName', label: 'Course name', minWidth: 280 },
+	{ id: 'fullName', label: 'Full name', minWidth: 280 },
 	{
-		id: 'teacher',
-		label: 'Teacher',
+		id: 'email',
+		label: 'Email',
 		minWidth: 150
 	},
 	{
-		id: 'schoolYear',
-		label: 'School year',
-		minWidth: 50,
-		align: 'center'
-	},
-	{
-		id: 'startDate',
-		label: 'Start date',
+		id: 'userCode',
+		label: 'User code',
 		minWidth: 50,
 		align: 'center'
 	}
 ];
 
-const Courses = () => {
+const Users = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const query = useQuery();
-	const { isLoading = false, courses, total } = useSelector((state) => state.course);
+	const { isLoading, users, total } = useSelector((state) => state.user);
 	const [rowsPerPage, setRowsPerPage] = useState(+query.get('rowsPerPage') || ROWS_PER_PAGE);
 	const [page, setPage] = useState(+query.get('page') || 0);
-	const [sortMode, setSortMode] = useState('time-desc');
+	const [sortMode, setSortMode] = useState(query.get('sortMode') || 'time-desc');
+	const [searchString, setSearchString] = useState(query.get('search') || '');
 	const numberOfPages = Math.ceil(total / rowsPerPage) - 1 < 0 ? 0 : Math.ceil(total / rowsPerPage) - 1;
 
 	if (rowsPerPage < -1) {
 		setRowsPerPage(-1);
 	}
-	const handleSortModeChange = (event) => {
-		event.preventDefault;
-		const { value } = event.target;
-		setSortMode(value);
+
+	const handleChange = (event) => {
+		setSortMode(event.target.value);
+	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		const data = new FormData(event.currentTarget);
+		const search = data.get('search');
+		setSearchString(search);
 	};
 	useEffect(() => {
-		navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`, { replace: true });
-		dispatch(getCourses(page + 1, rowsPerPage, sortMode));
-	}, [page, rowsPerPage, sortMode]);
+		let url = `/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`;
+		if (searchString !== '') {
+			const encodedSearch = encodeURIComponent(searchString);
+			url = url + `&search=${encodedSearch}`;
+			dispatch(getUsers(page + 1, rowsPerPage, sortMode, encodedSearch));
+		} else {
+			dispatch(getUsers(page + 1, rowsPerPage, sortMode, ''));
+		}
+		navigate(url, { replace: true });
+	}, [page, rowsPerPage, sortMode, searchString]);
 
 	const coursesJSX = isLoading ? (
 		<LinearProgress />
@@ -82,14 +90,19 @@ const Courses = () => {
 				gutterBottom
 				sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
 			>
-				COURSE MANAGEMENT
+				Users
 			</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-				<Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
+				<Paper
+					onSubmit={handleSubmit}
+					component='form'
+					sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+				>
 					<InputBase
 						sx={{ ml: 1, flex: 1 }}
 						placeholder='Search Name or Email'
 						inputProps={{ 'aria-label': 'search google maps' }}
+						name='search'
 					/>
 					<IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
 						<SearchIcon />
@@ -102,7 +115,7 @@ const Courses = () => {
 						id='demo-simple-select-helper'
 						value={sortMode}
 						label='Sort By Time'
-						onChange={handleSortModeChange}
+						onChange={handleChange}
 					>
 						<MenuItem value='time-asc'>ASC</MenuItem>
 						<MenuItem value='time-desc'>DESC</MenuItem>
@@ -112,7 +125,7 @@ const Courses = () => {
 			{total > 0 ? (
 				<Paper sx={{ width: '100%', overflow: 'hidden' }}>
 					<TableContainer>
-						<Table stickyHeader aria-label='sticky table'>
+						<Table aria-label='sticky table'>
 							<TableHead>
 								<TableRow>
 									{columns.map((column) => (
@@ -127,14 +140,8 @@ const Courses = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{courses.map((course, index) => {
-									return (
-										<CourseRow
-											key={course.id}
-											course={course}
-											stt={page * rowsPerPage + index + 1}
-										/>
-									);
+								{users.map((user, index) => {
+									return <User key={user.id} user={user} stt={page * rowsPerPage + index + 1} />;
 								})}
 							</TableBody>
 						</Table>
@@ -149,7 +156,7 @@ const Courses = () => {
 				</Paper>
 			) : (
 				<Typography variant='h5' gutterBottom>
-					You have {total} course.
+					You have {total} user.
 				</Typography>
 			)}
 		</>
@@ -164,4 +171,4 @@ const Courses = () => {
 	);
 };
 
-export default Courses;
+export default Users;

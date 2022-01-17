@@ -29,17 +29,3 @@ export const getCourseDetails = (id) => async (dispatch) => {
 		dispatch(courseDetailActions.changeIsLoading(false));
 	}
 };
-
-
-
-// export const checkOwner = async (courseId) => {
-// 	try {
-// 		const { userId } = getUserInformationFromStorage();
-// 		const { data } = await api.checkOwner(courseId, userId);
-// 		return data;
-// 	} catch (error) {
-// 		//toast.error(error.message);
-// 	} finally {
-// 		//not thing
-// 	}
-// };

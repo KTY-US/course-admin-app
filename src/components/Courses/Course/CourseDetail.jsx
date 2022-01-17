@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
 	CircularProgress,
@@ -9,11 +9,15 @@ import {
 	Divider,
 	TextField,
 	Grid,
+	Button,
 	Typography,
 	Card,
 	CardContent,
 	Box
 } from '@mui/material';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import createStyles from './styles';
 import { getCourseDetails } from '../../../actions/course';
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -22,15 +26,19 @@ const DateConverter = (date) => {
 };
 
 const CourseDetail = () => {
+	const navigate = useNavigate();
 	const { courseId } = useParams();
 	const dispatch = useDispatch();
 	const classes = createStyles();
 
 	const { isLoading, details: courseData } = useSelector((state) => state.courseDetail);
+
+	const handleGoBack = () => {
+		navigate(-1);
+	};
 	useEffect(() => {
 		dispatch(getCourseDetails(courseId));
 	}, []);
-	console.log(courseData);
 	return (
 		<>
 			{isLoading ? (
@@ -41,11 +49,27 @@ const CourseDetail = () => {
 				<>
 					{courseData ? (
 						<Container className={classes.container}>
-							<Typography variant='h4' align='center'>
-								Course Detail
+							<Grid container sx={{ maxWidth: 'md', margin: 'auto' }}>
+								<Grid display='flex' justifyContent='flex-start' width='md'>
+									<Button
+										className={classes.display}
+										sx={{ textTransform: 'none' }}
+										onClick={handleGoBack}
+									>
+										<KeyboardBackspaceIcon fontSize='small' /> Go back
+									</Button>
+								</Grid>
+							</Grid>
+							<Typography
+								sx={{ fontSize: { lg: 30, md: 25, sm: 20, xs: 18 }, fontWeight: 'bolder' }}
+								align='center'
+							>
+								COURSE DETAILS
 							</Typography>
 							<Card sx={{ marginTop: 15, margin: 'auto' }}>
-								<CardHeader subheader='The information cannot be edited' title='Course owner' />
+								<CardHeader>
+									<Typography>COURSE DETAILS</Typography>
+								</CardHeader>
 								<Divider />
 								<CardContent>
 									<Box
@@ -98,7 +122,11 @@ const CourseDetail = () => {
 												fullWidth
 												label='User Code'
 												name='userCode'
-												value={courseData?.owner?.userCode}
+												value={
+													courseData?.owner?.userCode === ''
+														? 'Empty'
+														: courseData?.owner?.userCode
+												}
 												variant='outlined'
 											/>
 										</Grid>
@@ -133,7 +161,6 @@ const CourseDetail = () => {
 												fullWidth
 												label='Course Name'
 												name='courseName'
-												disable
 												value={courseData?.courseName}
 												variant='outlined'
 											/>
@@ -144,7 +171,6 @@ const CourseDetail = () => {
 												fullWidth
 												label='School Year'
 												name='schoolYear'
-												disable
 												value={courseData?.schoolYear}
 												variant='outlined'
 											/>
@@ -154,7 +180,6 @@ const CourseDetail = () => {
 												fullWidth
 												label='Invite Code'
 												name='inviteCode'
-												disable
 												value={courseData?.code}
 												variant='outlined'
 											/>
@@ -164,7 +189,6 @@ const CourseDetail = () => {
 												fullWidth
 												label='Create Time'
 												name='createTime'
-												disable
 												value={DateConverter(courseData?.createdAt)}
 												variant='outlined'
 											/>

@@ -2,10 +2,11 @@ import API from './helper';
 
 // User APIs
 
-export const checkUserCode = (data) => API.post(`/users/check-code/${data.userId}`, data);
+export const getUsers = (page, rowsPerPage, sortMode, searchString) =>
+	API.get(`/users?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}&search=${searchString}`);
 
-export const updateProfile = (form) => API.post(`/users/update-profile/${form.userId}`, form);
+export const getUser = (userId) => API.get(`/users/${userId}`);
 
-export const loadProfile = (userId) => API.get(`/users/byId/${userId}`);
+export const changeStatus = (userId) => API.put(`/users/change-lock-status/${userId}`);
 
-export const getUserByCode = (userCode) => API.get(`/users/byCode/${userCode}`);
+export const checkUserCode = (data) => API.post(`/users/check-code/${data.userId}`, { code: data.code });

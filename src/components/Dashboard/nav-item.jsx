@@ -2,8 +2,7 @@ import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { Box, Button, ListItem } from '@mui/material';
 
-export const NavItem = (props) => {
-	const { href, icon, title, ...others } = props;
+export const NavItem = ({ href, icon, title, ...others }) => {
 	const location = useLocation();
 	const active = href ? location.pathname === href : false;
 

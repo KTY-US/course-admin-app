@@ -3,20 +3,18 @@ import { Navigate } from 'react-router-dom';
 
 import { getUserInformationFromStorage } from '../../helpers/localStorage';
 
-const PrivateRoute = ({ children }) => {
+const AuthRoute = ({ children }) => {
 	const user = getUserInformationFromStorage();
 	return user?.userId ? (
-		children
+		<Navigate
+			to={{
+				pathname: '/',
+				query: '?src=non'
+			}}
+		/>
 	) : (
-		<>
-			<Navigate
-				to={{
-					pathname: '/auth/signin',
-					query: '?src=non'
-				}}
-			/>
-		</>
+		children
 	);
 };
 
-export default PrivateRoute;
+export default AuthRoute;

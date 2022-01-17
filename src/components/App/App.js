@@ -7,11 +7,13 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Error from '../Error/Error';
-import Account from '../Account/Account';
 import Login from '../Auth/login';
 import Courses from '../Courses/Courses';
 import DashboardLayoutRoot from '../Dashboard/dashboard-layout';
 import CourseDetail from '../Courses/Course/CourseDetail';
+import Users from '../Users/Users';
+import UserDetail from '../Users/UserDetail/UserDetail';
+import PrivateRoute from '../Routes/PrivateRoute';
 
 const theme = createTheme();
 const App = () => {
@@ -23,11 +25,34 @@ const App = () => {
 						<Routes>
 							<Route path='/' element={<Navigate to='/courses' />} />
 							<Route path='/courses'>
-								<Route index element={<Courses />} />
-								<Route path=':courseId' element={<CourseDetail />} />
+								<Route index element={<PrivateRoute> <Courses /> </PrivateRoute>} />
+								<Route path=':courseId' element={<PrivateRoute> <CourseDetail /> </PrivateRoute>} />
 							</Route>
+							<Route
+								path='/admins'
+								element={
+									<PrivateRoute>
+										<Courses />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/users'
+								element={
+									<PrivateRoute>
+										<Users />
+									</PrivateRoute>
+								}
+							/>
+							<Route
+								path='/users/:id'
+								element={
+									<PrivateRoute>
+										<UserDetail />
+									</PrivateRoute>
+								}
+							/>
 							<Route path='/auth/signin' element={<Login />} />
-							<Route path='/user' element={<Account />} />
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
 						</Routes>

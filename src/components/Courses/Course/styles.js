@@ -8,5 +8,14 @@ export default makeStyles(() => ({
 		'&>*': {
 			margin: 10
 		}
+	}, display: {
+		display: 'flex',
+		alignItems: 'center'
+	},
+	leftItem: {
+		justifySelf: ' flex-end',
+		display: 'flex',
+		justifyContent: ' space-between',
+		alignItems: 'center'
 	}
 }));
