@@ -14,3 +14,16 @@ export const getUsers = (page, rowPerPage, sortMode, searchString) => async (dis
 		dispatch(userActions.changeIsLoading(false));
 	}
 };
+
+export const changeUserCode = async (data) => {
+	try {
+		const changeResult = await api.changeUserCode(data);
+		if (changeResult) {
+			toast.success('The user code has changed successfully');
+		} else {
+			toast.error('Change the user code has fail');
+		}
+	} catch (error) {
+		toast.error(error.message);
+	}
+};
