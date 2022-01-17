@@ -13,7 +13,7 @@ const adminSlice = createSlice({
 		changeIsLoading(state, action) {
 			state.isLoading = action.payload;
 		},
-		storeUsers(state, action) {
+		storeAdmins(state, action) {
 			state.admins = action.payload.admins;
 			state.total = action.payload.total;
 		}

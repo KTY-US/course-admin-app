@@ -30,7 +30,7 @@ const ROWS_PER_PAGE = -1;
 
 const columns = [
 	{ id: 'stt', label: 'STT', minWidth: 50, align: 'center' },
-	{ id: 'username', label: 'username', minWidth: 280 },
+	{ id: 'username', label: 'username', minWidth: 150 },
 	{
 		id: 'firstName',
 		label: 'First name',
@@ -39,8 +39,7 @@ const columns = [
 	{
 		id: 'lastName',
 		label: 'Last name',
-		minWidth: 80,
-		align: 'center'
+		minWidth: 80
 	},
 	{
 		id: 'role',

@@ -15,7 +15,6 @@ const User = ({ user, stt }) => {
 					<TableCell component='th' scope='row' align='center'>
 						{stt}
 					</TableCell>
-
 					<TableCell>{user.username}</TableCell>
 					<TableCell>{user.firstName}</TableCell>
 					<TableCell>{user.lastName}</TableCell>
