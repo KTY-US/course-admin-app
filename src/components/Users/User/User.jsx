@@ -20,7 +20,8 @@ const User = ({ user, stt }) => {
 					<TableCell component='th' scope='row' align='center'>
 						{stt}
 					</TableCell>
-
+					<TableCell>{user.firstName}</TableCell>
+					<TableCell>{user.lastName}</TableCell>
 					<TableCell>{getFullName(user.firstName, user.lastName)}</TableCell>
 					<TableCell>{user.email}</TableCell>
 					<TableCell align='center'>{user.userCode}</TableCell>

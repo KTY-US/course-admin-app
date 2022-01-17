@@ -26,8 +26,22 @@ const App = () => {
 						<Routes>
 							<Route path='/' element={<Navigate to='/courses' />} />
 							<Route path='/courses'>
-								<Route index element={<PrivateRoute> <Courses /> </PrivateRoute>} />
-								<Route path=':courseId' element={<PrivateRoute> <CourseDetail /> </PrivateRoute>} />
+								<Route
+									index
+									element={
+										<PrivateRoute>
+											<Courses />
+										</PrivateRoute>
+									}
+								/>
+								<Route
+									path=':courseId'
+									element={
+										<PrivateRoute>
+											<CourseDetail />
+										</PrivateRoute>
+									}
+								/>
 							</Route>
 							<Route
 								path='/admins'
@@ -37,22 +51,25 @@ const App = () => {
 									</PrivateRoute>
 								}
 							/>
-							<Route
-								path='/users'
-								element={
-									<PrivateRoute>
-										<Users />
-									</PrivateRoute>
-								}
-							/>
-							<Route
-								path='/users/:id'
-								element={
-									<PrivateRoute>
-										<UserDetail />
-									</PrivateRoute>
-								}
-							/>
+							<Route path='/users'>
+								<Route
+									index
+									element={
+										<PrivateRoute>
+											<Users />
+										</PrivateRoute>
+									}
+								/>
+								<Route
+									path=':id'
+									element={
+										<PrivateRoute>
+											<UserDetail />
+										</PrivateRoute>
+									}
+								/>
+							</Route>
+
 							<Route path='/auth/signin' element={<Login />} />
 							<Route path='/not-found' element={<Error content={'404 Page not found'} />} />
 							<Route path='*' element={<Error content={'404 Page not found'} />}></Route>
