@@ -8,7 +8,7 @@ import SchoolIcon from '@mui/icons-material/School';
 
 const items = [
 	{
-		href: '/',
+		href: '/admins',
 		icon: <ManageAccountsIcon fontSize='small' />,
 		title: 'Admins'
 	},
@@ -18,7 +18,7 @@ const items = [
 		title: 'Users'
 	},
 	{
-		href: '/products',
+		href: '/courses',
 		icon: <SchoolIcon fontSize='small' />,
 		title: 'Courses'
 	}
@@ -81,7 +81,7 @@ export const DashboardSidebar = (props) => {
 							href={item.href}
 							title={item.title}
 							sx={{ marginBottom: '5px' }}
-						/>
+						></NavItem>
 					))}
 				</Box>
 			</Box>

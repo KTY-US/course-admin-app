@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Container, Grid, Typography, Button, CircularProgress } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 import AccountProfile from './AccountProfile';
 import AccountProfileDetails from './AccountProfileDetails';
 import { getUser } from '../../../apis/user';
-import { getUserInformationFromStorage } from '../../../helpers/localStorage';
 
 const UserDetail = () => {
 	const navigate = useNavigate();
-	const location = useLocation();
 	const { id: userId } = useParams();
 	const [userData, setUserData] = useState({});
 	const [isLoading, setIsLoading] = useState(false);

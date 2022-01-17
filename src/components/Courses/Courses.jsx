@@ -23,9 +23,8 @@ import Select from '@mui/material/Select';
 
 import { getCourses } from '../../actions/course';
 import Pagination from '../Pagination/Pagination';
-import Course from './Course/Course';
+import CourseRow from './Course/CourseRow';
 import { useQuery } from '../../helpers/queryString';
-import { getUserInformationFromStorage } from '../../helpers/localStorage';
 
 const ROWS_PER_PAGE = -1;
 
@@ -55,28 +54,24 @@ const Courses = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const query = useQuery();
-	// const { isLoading, courses, total } = useSelector((state) => state.course);
+	const { isLoading = false, courses, total } = useSelector((state) => state.course);
 	const [rowsPerPage, setRowsPerPage] = useState(+query.get('rowsPerPage') || ROWS_PER_PAGE);
 	const [page, setPage] = useState(+query.get('page') || 0);
-	const total = 10;
-	const isLoading = false;
+	const [sortMode, setSortMode] = useState('time-desc');
 	const numberOfPages = Math.ceil(total / rowsPerPage) - 1 < 0 ? 0 : Math.ceil(total / rowsPerPage) - 1;
 
 	if (rowsPerPage < -1) {
 		setRowsPerPage(-1);
 	}
-
-	const [age, setAge] = React.useState('');
-
-	const handleChange = (event) => {
-		setAge(event.target.value);
+	const handleSortModeChange = (event) => {
+		event.preventDefault;
+		const { value } = event.target;
+		setSortMode(value);
 	};
-
-	// useEffect(() => {
-	// 	const userId = getUserInformationFromStorage().userId;
-	// 	navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}`, { replace: true });
-	// 	dispatch(getCourses(page + 1, rowsPerPage, userId));
-	// }, [page, rowsPerPage]);
+	useEffect(() => {
+		navigate(`/courses?page=${page}&rowsPerPage=${rowsPerPage}&sortMode=${sortMode}`, { replace: true });
+		dispatch(getCourses(page + 1, rowsPerPage, sortMode));
+	}, [page, rowsPerPage, sortMode]);
 
 	const coursesJSX = isLoading ? (
 		<LinearProgress />
@@ -87,7 +82,7 @@ const Courses = () => {
 				gutterBottom
 				sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
 			>
-				Courses
+				COURSE MANAGEMENT
 			</Typography>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
 				<Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
@@ -105,15 +100,12 @@ const Courses = () => {
 					<Select
 						labelId='demo-simple-select-helper-label'
 						id='demo-simple-select-helper'
-						value={age}
+						value={sortMode}
 						label='Sort By Time'
-						onChange={handleChange}
+						onChange={handleSortModeChange}
 					>
-						<MenuItem value=''>
-							<em>None</em>
-						</MenuItem>
-						<MenuItem value={10}>ASC</MenuItem>
-						<MenuItem value={20}>DESC</MenuItem>
+						<MenuItem value='time-asc'>ASC</MenuItem>
+						<MenuItem value='time-desc'>DESC</MenuItem>
 					</Select>
 				</FormControl>
 			</Box>
@@ -135,14 +127,15 @@ const Courses = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{/* {courses.map((course, index) => {
+								{courses.map((course, index) => {
 									return (
-										<Course key={course.id} course={course} stt={page * rowsPerPage + index + 1} />
+										<CourseRow
+											key={course.id}
+											course={course}
+											stt={page * rowsPerPage + index + 1}
+										/>
 									);
-								})} */}
-								<Course />
-								<Course />
-								<Course />
+								})}
 							</TableBody>
 						</Table>
 					</TableContainer>

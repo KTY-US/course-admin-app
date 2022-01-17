@@ -25,7 +25,6 @@ import { getUsers } from '../../actions/user';
 import Pagination from '../Pagination/Pagination';
 import User from './User/User';
 import { useQuery } from '../../helpers/queryString';
-import { getUserInformationFromStorage } from '../../helpers/localStorage';
 
 const ROWS_PER_PAGE = -1;
 
