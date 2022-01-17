@@ -5,7 +5,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 import AccountProfile from './AccountProfile';
 import AccountProfileDetails from './AccountProfileDetails';
-import { getUser } from '../../../apis/user';
+import { getAdmin } from '../../../apis/admin';
 
 const AdminDetail = () => {
 	const navigate = useNavigate();
@@ -19,7 +19,7 @@ const AdminDetail = () => {
 
 	useEffect(async () => {
 		setIsLoading(true);
-		const { data } = await getUser(userId);
+		const { data } = await getAdmin(userId);
 		setUserData(data);
 		setIsLoading(false);
 	}, []);
@@ -57,7 +57,7 @@ const AdminDetail = () => {
 									}}
 									variant='h4'
 								>
-									Account
+									Admin detail
 								</Typography>
 								<Grid container spacing={3}>
 									<Grid item lg={4} md={6} xs={12}>
