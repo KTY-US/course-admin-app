@@ -16,8 +16,6 @@ import {
 	Box
 } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import createStyles from './styles';
 import { getCourseDetails } from '../../../actions/course';
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
