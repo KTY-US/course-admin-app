@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Box, Button, Card, CardActions, CardContent, Divider, Typography } from '@mui/material';
 
-import { changeStatus } from '../../../apis/user';
+import { changeStatus, getUser } from '../../../apis/user';
 
 const AccountProfile = ({ user }) => {
 	const [statusAccount, setStatusAccount] = useState(user ? user.status : '');
@@ -9,9 +9,10 @@ const AccountProfile = ({ user }) => {
 		const res = await changeStatus(user.id);
 
 		if (res) {
-			if (user.status === 'blocked') {
+			const { data } = await getUser(user.id);
+			if (data.status === 'blocked') {
 				setStatusAccount('active');
-			} else if (user.status === 'active') {
+			} else if (data.status === 'active') {
 				setStatusAccount('blocked');
 			}
 		}
