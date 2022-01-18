@@ -11,9 +11,9 @@ const AccountProfile = ({ user }) => {
 		if (res) {
 			const { data } = await getUser(user.id);
 			if (data.status === 'blocked') {
-				setStatusAccount('active');
-			} else if (data.status === 'active') {
 				setStatusAccount('blocked');
+			} else if (data.status === 'active') {
+				setStatusAccount('active');
 			}
 		}
 	};
