@@ -4,10 +4,10 @@ import * as api from '../apis/course.js';
 import { courseActions } from '../reducers/course.js';
 import { courseDetailActions } from '../reducers/courseDetail.js';
 
-export const getCourses = (page, rowPerPage, sortMode) => async (dispatch) => {
+export const getCourses = (page, rowPerPage, sortMode, searchString) => async (dispatch) => {
 	try {
 		dispatch(courseActions.changeIsLoading(true));
-		const { data } = await api.getCourses(page, rowPerPage, sortMode);
+		const { data } = await api.getCourses(page, rowPerPage, sortMode, searchString);
 		dispatch(courseActions.storeCourses(data));
 	} catch (error) {
 		toast.error(error.message);
