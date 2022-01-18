@@ -65,9 +65,7 @@ const CourseDetail = () => {
 								COURSE DETAILS
 							</Typography>
 							<Card sx={{ marginTop: 15, margin: 'auto' }}>
-								<CardHeader>
-									<Typography>COURSE DETAILS</Typography>
-								</CardHeader>
+								<CardHeader subheader='The information cannot be edited' title='Owner information' />
 								<Divider />
 								<CardContent>
 									<Box
