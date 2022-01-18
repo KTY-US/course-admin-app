@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 import { createAdmin } from '../../../actions/admin';
-import useStyles from './styles';
 
 const MAX_LENGTH = 255;
 const MIN_LENGTH = 8;
@@ -28,7 +27,6 @@ const validateForm = async (form) => {
 };
 
 const CreateAdminAccForm = ({ open, setOpen }) => {
-	const classes = useStyles();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [errors, setErrors] = useState({ adminUsernameErr: '', firstNameErr: '', lastNameErr: '' });
