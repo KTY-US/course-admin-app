@@ -20,6 +20,7 @@ export const NavItem = ({ href, icon, title, ...others }) => {
 			<Button
 				component={Link}
 				to={href}
+				replace
 				startIcon={icon}
 				disableRipple
 				sx={{
