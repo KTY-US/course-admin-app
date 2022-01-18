@@ -120,6 +120,7 @@ const Admins = () => {
 						placeholder='Search Name or Email'
 						inputProps={{ 'aria-label': 'search google maps' }}
 						name='search'
+						defaultValue={searchString}
 					/>
 					<IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
 						<SearchIcon />
