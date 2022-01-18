@@ -26,21 +26,10 @@ const items = [
 
 export const DashboardSidebar = (props) => {
 	const { open, onClose } = props;
-	// const router = useRouter();
 	const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
 		defaultMatches: true,
 		noSsr: false
 	});
-
-	// useEffect(() => {
-	// 	if (!router.isReady) {
-	// 		return;
-	// 	}
-
-	// 	if (open) {
-	// 		onClose?.();
-	// 	}
-	// });
 
 	const content = (
 		<>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
@@ -214,10 +215,9 @@ export const DashboardNavbar = ({ user, setUser, onSidebarOpen, ...other }) => {
 						component={Link}
 						to='/courses'
 						underline='none'
-						color='white'
 						style={{ textDecoration: 'none' }}
 					>
-						COURSE MANAGEMENT
+						ADMIN PAGE
 					</Typography>
 					<Box sx={{ flexGrow: 1 }} />
 					<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
