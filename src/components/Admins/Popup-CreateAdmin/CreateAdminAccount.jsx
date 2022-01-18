@@ -32,7 +32,6 @@ const CreateAdminAccForm = ({ open, setOpen }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [errors, setErrors] = useState({ adminUsernameErr: '', firstNameErr: '', lastNameErr: '' });
-	const [errorCredential, setErrorCredential] = useState('');
 	const adminUsernameRef = useRef();
 	const firstNameRef = useRef();
 	const lastNameRef = useRef();
@@ -52,7 +51,7 @@ const CreateAdminAccForm = ({ open, setOpen }) => {
 		if (errors.adminUsernameErr !== '' || errors.firstNameErr !== '' || errors.lastNameErr !== '') {
 			setErrors(errors);
 		} else {
-			dispatch(createAdmin(form, navigate, setErrorCredential));
+			dispatch(createAdmin(form, navigate));
 			setOpen(false);
 		}
 	};
@@ -99,11 +98,6 @@ const CreateAdminAccForm = ({ open, setOpen }) => {
 						inputRef={lastNameRef}
 						helperText={errors.lastNameErr}
 					/>
-					{errorCredential && (
-						<Typography className={classes.errorMessage} variant='outlined'>
-							{errorCredential}
-						</Typography>
-					)}
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color='error' variant='contained'>

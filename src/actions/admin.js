@@ -3,13 +3,13 @@ import { toast } from 'react-toastify';
 import * as api from '../apis/admin';
 import { adminActions } from '../reducers/admin';
 
-export const createAdmin = (form, navigate, setErrorCredential) => async () => {
+export const createAdmin = (form, navigate) => async () => {
 	try {
 		await api.createAdmin(form);
 		navigate('/admins');
 		toast.success('Create admin account successful!!!');
 	} catch ({ response }) {
-		setErrorCredential(response?.data.message);
+		toast.error(response?.data.message);
 	} finally {
 		// no-thing
 	}
